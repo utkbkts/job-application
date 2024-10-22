@@ -1,33 +1,17 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Bookmark, MapPinned } from "lucide-react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-const homeImage = [
-  {
-    id: 1,
-    image: "/home/1.jpg",
-  },
-  {
-    id: 2,
-    image: "/home/2.jpg",
-  },
-  {
-    id: 3,
-    image: "/home/3.jpg",
-  },
-  {
-    id: 4,
-    image: "/home/4.jpg",
-  },
-  {
-    id: 5,
-    image: "/home/5.jpg",
-  },
-];
 const JobsCard = ({ job }) => {
   const navigate = useNavigate();
-  console.log(job);
+  const { user } = useSelector((state) => state.auth);
+
+  const isApplies = job?.applications?.some(
+    (application) => application?.applicant?._id === user?._id || false
+  );
+
   return (
     <div className="w-full h-[400px] rounded-md border border-gray-400">
       <div className="p-2 w-full">
@@ -41,10 +25,10 @@ const JobsCard = ({ job }) => {
           <span className="bg-purple-500 py-1 text-white px-1 rounded-md">
             {job?.jobType}
           </span>
-          <span>salary: {job?.salary}</span>
+          <span>maaş: {job?.salary}₺</span>
         </div>
-        <div className="flex pt-4">
-          <img src="/home/apple.png" alt="" className="w-12 h-12" />
+        <div className="flex pt-4 items-center">
+          <img src={job?.companyLogo?.url} alt="" className="w-12 h-12" />
           <div className="flex items-start gap-2 flex-col">
             <span>{job?.company?.name}</span>
             <span className="flex items-center gap-2">
@@ -54,9 +38,9 @@ const JobsCard = ({ job }) => {
           </div>
         </div>
         <div className="flex items-center pt-12 pl-4">
-          {homeImage.map((item) => (
+          {job?.applications?.map((item) => (
             <img
-              src={item.image}
+              src={item?.applicant?.avatar?.url}
               key={item.id}
               className="rounded-full h-8 w-8 -m-2"
             />
@@ -65,13 +49,13 @@ const JobsCard = ({ job }) => {
         </div>
         <div className="pt-4">
           <Badge className={"text-blue-700 font-bold"} variant={"ghost"}>
-            {job?.position}
+            {job?.experience}
           </Badge>{" "}
           <Badge className={"text-red-700 font-bold"} variant={"ghost"}>
             {job?.jobType}
           </Badge>
           <Badge className={"text-yellow-700 font-bold"} variant={"ghost"}>
-            {job?.experienceLevel}
+            {job?.experienceLevel}+Deneyim
           </Badge>
         </div>
         <div className="pt-4 flex items-center gap-2">
@@ -81,8 +65,11 @@ const JobsCard = ({ job }) => {
           >
             Detay
           </Button>
-          <Button className="bg-purple-500 hover:bg-purple-600">
-            Şimdi Başvur
+          <Button
+            disabled={isApplies}
+            className="bg-purple-500 hover:bg-purple-600"
+          >
+            {isApplies ? "Başvuruldu" : " Şimdi Başvur"}
           </Button>
         </div>
       </div>

@@ -9,7 +9,22 @@ export const jobsApi = createApi({
   tagTypes: ["User", "Apply"],
   endpoints: (builder) => ({
     getAllJobs: builder.query({
-      query: () => "/get/all",
+      query: (params) => {
+        console.log("🚀 ~ title:", params);
+        return {
+          url: "/get/all",
+          params: {
+            page: params?.page,
+            search: params?.search,
+            location: params?.location,
+            title: params?.title,
+            companyName: params?.companyName,
+            "salary[gte]": params?.min,
+            "salary[lte]": params?.max,
+            "ratings[lte]": params?.ratings,
+          },
+        };
+      },
     }),
     createJobs: builder.mutation({
       query(body) {

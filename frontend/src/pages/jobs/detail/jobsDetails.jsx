@@ -44,7 +44,7 @@ const JobsDetails = () => {
               className="bg-blue-100 text-blue-700 font-bold py-2 px-4 rounded-md"
               variant="ghost"
             >
-              {data?.job?.position}
+              {data?.job?.locationType}
             </Badge>
             <Badge
               className="bg-red-100 text-red-700 font-bold py-2 px-4 rounded-md"
@@ -72,10 +72,14 @@ const JobsDetails = () => {
       </h2>
       <div className="space-y-4">
         <div className="flex items-center">
+          <h3 className="font-semibold text-xl w-40 text-gray-800">Şirket:</h3>
+          <p className="text-lg text-gray-600">{data?.job?.companyName}🚀</p>
+        </div>
+        <div className="flex items-center">
           <h3 className="font-semibold text-xl w-40 text-gray-800">
             Pozisyon:
           </h3>
-          <p className="text-lg text-gray-600">{data?.job?.position}</p>
+          <p className="text-lg text-gray-600">{data?.job?.experience}</p>
         </div>
         <div className="flex items-center">
           <h3 className="font-semibold text-xl w-40 text-gray-800">Konum:</h3>
@@ -83,11 +87,9 @@ const JobsDetails = () => {
         </div>
         <div className="flex items-center">
           <h3 className="font-semibold text-xl w-40 text-gray-800">Deneyim:</h3>
-          <p className="text-lg text-gray-600">{data?.job?.experience}+ Yıl</p>
-        </div>
-        <div className="flex items-center">
-          <h3 className="font-semibold text-xl w-40 text-gray-800">Seviye:</h3>
-          <p className="text-lg text-gray-600">{data?.job?.experienceLevel}</p>
+          <p className="text-lg text-gray-600">
+            {data?.job?.experienceLevel}+ Yıl
+          </p>
         </div>
         <div className="flex items-center">
           <h3 className="font-semibold text-xl w-40 text-gray-800">Maaş:</h3>
@@ -116,7 +118,7 @@ const JobsDetails = () => {
             {FormatDate(data?.job?.updatedAt)}
           </p>
         </div>
-        <div className="flex items-center">
+        <div className="flex items-start flex-col">
           <h3 className="font-semibold text-xl w-40 text-gray-800">
             Açıklama:
           </h3>

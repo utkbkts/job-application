@@ -29,4 +29,6 @@ router.post(
 //me profile
 router.get("/me", isAuthenticatedUser, userControllers.GetUserMyProfile);
 
+router.get("/getAllUsers", userControllers.getAllUsers);
+
 export default router;

@@ -10,7 +10,7 @@ const LatestJobs = () => {
       <h1 className="text-3xl font-bold">En son paylaşılan işler</h1>
       <Separator className="mb-2 mt-2" />
       <div className="grid grid-cols-3 gap-4 my-5">
-        {getAllJobs?.job?.map((job, index) => (
+        {getAllJobs?.jobs?.map((job, index) => (
           <JobsCard key={index} job={job} />
         ))}
       </div>

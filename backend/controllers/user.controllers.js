@@ -150,4 +150,19 @@ const GetUserMyProfile = catchAsyncError(async (req, res, next) => {
   });
 });
 
-export default { Register, Login, LogoutUser, updateProfile, GetUserMyProfile };
+const getAllUsers = catchAsyncError(async (req, res, next) => {
+  const users = await User.find({}).sort({ createdAt: -1 }).lean();
+
+  return res.status(201).json({
+    users,
+  });
+});
+
+export default {
+  Register,
+  Login,
+  LogoutUser,
+  updateProfile,
+  GetUserMyProfile,
+  getAllUsers,
+};

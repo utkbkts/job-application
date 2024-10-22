@@ -33,7 +33,15 @@ export const userApi = createApi({
       },
       invalidatesTags: ["User"],
     }),
+    getAllusers: builder.query({
+      query: () => "/getAllUsers",
+      invalidatesTags: ["User"],
+    }),
   }),
 });
 
-export const { useGetUserQuery, useUpdateProfileMutation } = userApi;
+export const {
+  useGetUserQuery,
+  useUpdateProfileMutation,
+  useGetAllusersQuery,
+} = userApi;

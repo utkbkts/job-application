@@ -28,11 +28,13 @@ import CheckOutSteps from "@/components/checkOutSteps/checkOutSteps";
 import { useCompanyCreateMutation } from "@/redux/api/companyApi";
 import { useEffect } from "react";
 import LoadingButton from "@/components/ui/loadingButton";
+import { useNavigate } from "react-router-dom";
 
 const CompanyDetails = () => {
   const { company } = useSelector((state) => state.auth);
   const [companyCreate, { isSuccess, isError, error, isLoading }] =
     useCompanyCreateMutation();
+  const navigate = useNavigate();
   const form = useForm({
     resolver: zodResolver(createCompany),
     mode: "onChange",
@@ -50,7 +52,7 @@ const CompanyDetails = () => {
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setValue("file", reader.result);
+        setValue("logo", reader.result);
       };
       reader.readAsDataURL(file);
     }
@@ -58,6 +60,7 @@ const CompanyDetails = () => {
   useEffect(() => {
     if (isSuccess) {
       toast.success("Başarıyla oluşturuldu");
+      navigate("/recruiter/dashboard");
     }
     if (isError) {
       console.log(error);
@@ -170,7 +173,6 @@ const CompanyDetails = () => {
                             type="file"
                             accept="image/*"
                             onChange={handleImageChange}
-                            {...field}
                           />
                         </div>
                       </FormControl>

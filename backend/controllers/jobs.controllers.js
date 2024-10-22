@@ -1,4 +1,5 @@
 import catchAsyncError from "../middleware/catch.middleware.js";
+import Company from "../models/company.models.js";
 import Job from "../models/job.models.js";
 import apiFilter from "../utils/api.filters.js";
 import { upload_file } from "../utils/cloudinary.js";
@@ -54,7 +55,13 @@ const GetAllJobs = catchAsyncError(async (req, res, next) => {
 
   const apiFilters = new apiFilter(Job, req.query).searchResult().filters();
 
-  let job = await apiFilters.query.populate("company user applications");
+  let job = await apiFilters.query
+    .lean()
+    .populate("user applications company")
+    .populate({
+      path: "applications",
+      populate: { path: "applicant" },
+    });
 
   let FilteredProductCount = job.length;
 
@@ -84,7 +91,7 @@ const GetJobById = catchAsyncError(async (req, res, next) => {
     .populate("user applications company")
     .populate({
       path: "applications",
-      populate: { path: "applicant" }, // Başvuru yapan kullanıcının bilgilerini doldurur
+      populate: { path: "applicant" },
     });
 
   if (!job) {
