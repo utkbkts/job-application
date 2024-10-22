@@ -25,24 +25,31 @@ const settings = [
   },
   {
     id: 3,
+    name: "Şirket ekle",
+    url: "/recruiter/companies/create",
+    icon: <CirclePlus />,
+  },
+
+  {
+    id: 4,
     name: "ilanlarım",
     url: "/myads",
     icon: <FileSpreadsheet />,
   },
   {
-    id: 4,
+    id: 5,
     name: "başvurular",
     url: "/applications",
     icon: <FileUser />,
   },
   {
-    id: 5,
+    id: 6,
     name: "Parola değiştir",
     url: "/passwordChange",
     icon: <KeyRound />,
   },
   {
-    id: 6,
+    id: 7,
     name: "güncelle",
     url: "/updatingCompany",
     icon: <RotateCcw />,
@@ -77,7 +84,7 @@ const svgVariant = {
 };
 
 const SidebarAside = () => {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   const location = useLocation().pathname;
   const [active, setActive] = useState(location);
 

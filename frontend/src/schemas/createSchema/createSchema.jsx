@@ -1,7 +1,7 @@
 import { locationTypes } from "@/lib/utils";
 import { z } from "zod";
 const requiredString = z
-  .string()
+  .string({ required_error: "zorunlu alan" })
   .min(1, "zorunlu alan")
   .regex(/^[a-zA-Z0-9çÇğĞüÜıİoOöÖşŞpP#@\s.,+'”:“”"/-]+$/, {
     message: "geçersiz karakter",
@@ -41,17 +41,18 @@ const applicationSchema = z
     path: ["applicationEmail"],
   });
 const requirementsSchema = z
-  .string()
-  .refine((value) => value.length > 0, "Gereksinimler zorunludur")
+  .string({ required_error: "zorunlu alan" })
+  .min(1, { message: "Gereksinimler zorunludur" })
   .transform((value) => value.split(",").map((item) => item.trim()));
+
 const createSchema = z
   .object({
-    title: requiredString.max(100),
-    companyName: requiredString.max(100),
+    title: requiredString.max(100, "100 karakter en fazla"),
+    companyName: requiredString.max(100, "100 karakter en fazla"),
     companyLogo: z.string(),
-    experienceLevel: requiredString.max(100),
-    experience: requiredString.max(100),
-    description: z.string().max(5000),
+    experienceLevel: requiredString.max(100, "100 karakter en fazla"),
+    experience: requiredString.max(100, "100 karakter en fazla"),
+    description: z.string({ required_error: "zorunlu alan" }).max(5000),
     requirements: requirementsSchema,
     location: z.string().min(1, { message: "konum alanı zorunludur" }),
     jobType: z.string().min(1, { message: "iş tipi alanı zorunludur" }),

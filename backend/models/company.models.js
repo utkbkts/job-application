@@ -7,7 +7,7 @@ const companySchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
-    name: {
+    companyName: {
       type: String,
       unique: true,
     },
@@ -15,9 +15,12 @@ const companySchema = new mongoose.Schema(
       type: String,
     },
     website: {
-      type: Number,
+      type: String,
     },
     location: {
+      type: String,
+    },
+    locationType: {
       type: String,
     },
     logo: {

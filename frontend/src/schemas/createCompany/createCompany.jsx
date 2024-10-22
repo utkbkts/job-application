@@ -1,3 +1,4 @@
+import { locationTypes } from "@/lib/utils";
 import { z } from "zod";
 const requiredString = z
   .string({ required_error: "zorunlu alan" })
@@ -6,9 +7,8 @@ const requiredString = z
     message: "geçersiz karakter",
   })
   .optional();
-export const locationTypes = ["Remote", "On-site", "Hybrid"];
 
-export const CompanySchema = z.object({
+export const createCompany = z.object({
   companyName: requiredString,
   description: requiredString,
   website: requiredString,

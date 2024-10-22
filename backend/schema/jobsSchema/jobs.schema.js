@@ -1,46 +1,53 @@
 import { z } from "zod";
 
-const namePattern = /^[a-zA-ZçÇğĞıİöÖşŞüÜ0-9\s?.,();:-]*$/;
+const requiredString = z
+  .string()
+  .min(1, "zorunlu alan")
+  .regex(/^[a-zA-Z0-9çÇğĞüÜıİoOöÖşŞpP#@\s.,+'”:“”"/-]+$/, {
+    message: "geçersiz karakter",
+  });
+export const locationTypes = ["Remote", "On-site", "Hybrid"];
 
-export const JobSchema = z.object({
-  title: z
-    .string()
-    .min(1, { message: "Başlık alanı zorunludur" })
-    .max(100, { message: "En fazla 100 karakter girebilirsin" })
-    .regex(namePattern, { message: "Başlık geçersiz karakterler içeriyor" }),
-
-  description: z
-    .string()
-    .min(1, { message: "Açıklama alanı zorunludur" })
-    .regex(namePattern, { message: "Açıklama geçersiz karakterler içeriyor" }),
-
-  requirements: z.array(
-    z.string().regex(namePattern, {
-      message: "Gereksinimler geçersiz karakterler içeriyor",
-    })
+const locationSchema = z.object({
+  locationType: requiredString.refine(
+    (value) => locationTypes.includes(value),
+    "geçersiz konum tipi"
   ),
-
-  salary: z.string().min(1, { message: "Maaş sıfırdan büyük olmalıdır" }),
-
-  location: z
-    .string()
-    .min(1, { message: "Konum alanı zorunludur" })
-    .regex(namePattern, { message: "Konum geçersiz karakterler içeriyor" }),
-
-  jobType: z
-    .string()
-    .min(1, { message: "İş türü alanı zorunludur" })
-    .regex(namePattern, { message: "İş türü geçersiz karakterler içeriyor" }),
-
-  experience: z
-    .string()
-    .min(1, { message: "Deneyim seviyesi alanı zorunludur" })
-    .regex(namePattern, {
-      message: "Deneyim seviyesi geçersiz karakterler içeriyor",
-    }),
-
-  position: z
-    .string()
-    .min(1, { message: "Pozisyon alanı zorunludur" })
-    .regex(namePattern, { message: "Pozisyon geçersiz karakterler içeriyor" }),
+  location: z.string().max(100).optional(),
 });
+const applicationSchema = z
+  .object({
+    applicationEmail: requiredString
+      .max(100)
+      .email({ message: "zorunlu alan" })
+      .optional()
+      .or(z.literal("")),
+    applicationUrl: requiredString
+      .max(100)
+      .url({ message: "zorunlu alan" })
+      .optional()
+      .or(z.literal("")),
+  })
+  .refine((data) => data.applicationEmail || data.applicationUrl, {
+    message: "Email ya da url zorunlu alan",
+    path: ["applicationEmail"],
+  });
+const requirementsSchema = z.array(
+  z.string().min(1, { message: "Gereksinimler zorunludur" })
+);
+
+export const JobSchema = z
+  .object({
+    title: requiredString.max(100),
+    companyName: requiredString.max(100),
+    companyLogo: z.string(),
+    experienceLevel: requiredString.max(100),
+    experience: requiredString.max(100),
+    description: z.string().max(5000),
+    requirements: requirementsSchema,
+    location: z.string().min(1, { message: "konum alanı zorunludur" }),
+    jobType: z.string().min(1, { message: "iş tipi alanı zorunludur" }),
+    salary: requiredString.max(30, "30 karakter en fazla"),
+  })
+  .and(applicationSchema)
+  .and(locationSchema);

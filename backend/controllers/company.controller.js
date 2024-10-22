@@ -1,19 +1,29 @@
 import Company from "../models/company.models.js";
+import { upload_file } from "../utils/cloudinary.js";
 import ErrorHandler from "../utils/error.handler.js";
 
 const CompanyRegister = async (req, res, next) => {
-  const { name } = req.body;
-
-  let company = await Company.findOne({ name });
+  const { companyName, description, location, website, locationType, logo } =
+    req.body;
+  let company = await Company.findOne({ companyName });
 
   if (company) {
     return next(new ErrorHandler("bu şirket kullanılıyor", 404));
   }
 
   company = await Company.create({
-    name,
+    companyName,
+    description,
+    location,
+    website,
+    locationType,
     user: req.user._id,
   });
+  if (logo) {
+    const uploadImages = await upload_file(logo, "jobs/create");
+    company.logo = uploadImages;
+    await company.save();
+  }
 
   return res.status(201).json({
     message: "Company success created",

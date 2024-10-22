@@ -1,6 +1,7 @@
 import catchAsyncError from "../middleware/catch.middleware.js";
 import Job from "../models/job.models.js";
 import apiFilter from "../utils/api.filters.js";
+import { upload_file } from "../utils/cloudinary.js";
 import ErrorHandler from "../utils/error.handler.js";
 
 const PostJob = catchAsyncError(async (req, res, next) => {
@@ -14,22 +15,34 @@ const PostJob = catchAsyncError(async (req, res, next) => {
     experienceLevel,
     experience,
     position,
-    companyId,
+    applicationEmail,
+    applicationUrl,
+    locationType,
+    companyName,
+    companyLogo,
   } = req.body;
 
   const job = await Job.create({
     title,
     description,
     requirements,
-    salary: Number(salary),
+    salary,
     location,
     jobType,
     experienceLevel,
     experience,
     position,
-    company: companyId,
+    applicationEmail,
+    applicationUrl,
+    locationType,
+    companyName,
     user: req.user._id,
   });
+  if (companyLogo) {
+    const uploadImages = await upload_file(companyLogo, "jobs/create");
+    job.companyLogo = uploadImages;
+    await job.save();
+  }
 
   res.status(200).json({
     job,

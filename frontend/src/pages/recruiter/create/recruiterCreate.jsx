@@ -25,7 +25,11 @@ import { X } from "lucide-react";
 import RichTextEditor from "@/components/richTextEditor/richTextEditor";
 import { Label } from "@/components/ui/label";
 import { draftToMarkdown } from "markdown-draft-js";
+import { useCreateJobsMutation } from "@/redux/api/jobsApi";
+import { useEffect } from "react";
+import { toast } from "sonner";
 const RecruiterCreate = () => {
+  const [createJobs, { isSuccess, isError, error }] = useCreateJobsMutation();
   const form = useForm({
     resolver: zodResolver(createSchema),
     mode: "onChange",
@@ -52,7 +56,6 @@ const RecruiterCreate = () => {
     trigger,
     formState: { isSubmitting, errors },
   } = form;
-  console.log("🚀 ~ RecruiterCreate ~ errors:", errors);
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -66,9 +69,20 @@ const RecruiterCreate = () => {
     }
   };
 
-  const onSubmit = (values) => {
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success("Başarıyla oluşturuldu");
+    }
+    if (isError) {
+      console.log(error);
+      toast.error(error?.data?.message || error?.data?.errors[0]?.message);
+    }
+  }, [isError, isSuccess, error]);
+
+  const onSubmit = async (values) => {
+   
+    await createJobs(values);
     console.log("Form değerleri:", values);
-    console.log("Hata mesajları:", form.formState.errors);
   };
 
   return (
@@ -185,7 +199,11 @@ const RecruiterCreate = () => {
 
             {/* Şirket Logosu */}
             <div className="flex flex-col gap-2 pt-4">
-              <Input type="file" accept="image/" onChange={handleImageChange} />
+              <Input
+                type="file"
+                accept="image/*"
+                onChange={handleImageChange}
+              />
             </div>
 
             {/* Konum */}
@@ -315,7 +333,7 @@ const RecruiterCreate = () => {
               name="requirements"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Gereksinimler örn:HTML,CSS</FormLabel>
+                  <FormLabel>Gereksinimler örn: HTML,CSS</FormLabel>
                   <FormControl>
                     <Input
                       {...field}
@@ -328,7 +346,6 @@ const RecruiterCreate = () => {
               )}
             />
           </div>
-
           <div className="pt-4">
             <FormField
               control={control}

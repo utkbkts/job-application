@@ -5,7 +5,6 @@ const jobSchema = new mongoose.Schema(
     company: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Company",
-      required: true,
     },
     user: {
       type: mongoose.Schema.Types.ObjectId,
@@ -40,7 +39,7 @@ const jobSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    locationTypes: {
+    locationType: {
       type: String,
       enum: {
         values: ["Remote", "On-site", "Hybrid"],
@@ -64,9 +63,21 @@ const jobSchema = new mongoose.Schema(
       },
       required: true,
     },
-    position: {
+    applicationEmail: {
       type: String,
       required: true,
+    },
+    applicationUrl: {
+      type: String,
+      required: true,
+    },
+    companyName: {
+      type: String,
+      required: true,
+    },
+    companyLogo: {
+      public_id: { type: String },
+      url: { type: String },
     },
   },
   { timestamps: true }
