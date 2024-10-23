@@ -2,6 +2,7 @@ import NotFound from "@/components/notFound/notFound";
 import MainLayout from "@/layouts/mainLayout";
 import Login from "@/pages/auth/login/login";
 import Register from "@/pages/auth/register/register";
+import BestSoftware from "@/pages/bestSoftware/bestSoftware";
 import Company from "@/pages/companies/company";
 import HomePage from "@/pages/home/homePage";
 import JobsDetails from "@/pages/jobs/detail/jobsDetails";
@@ -35,6 +36,10 @@ export const MainRoutes = {
     {
       path: "/companies",
       element: <Company />,
+    },
+    {
+      path: "/bestSoftware",
+      element: <BestSoftware />,
     },
   ],
 };

@@ -1,4 +1,5 @@
 import { useTopReviewsQuery } from "@/redux/api/analyticApi";
+import { useGetAllJobsQuery } from "@/redux/api/jobsApi";
 import { useGetAllusersQuery } from "@/redux/api/userApi";
 const ExperienceAbout = () => {
   const { data: getAllUsers } = useGetAllusersQuery();
@@ -9,7 +10,8 @@ const ExperienceAbout = () => {
     ?.slice()
     .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))[0];
   const { data } = useTopReviewsQuery();
-  console.log("🚀 ~ ExperienceAbout ~ data:", data);
+  const { data: getAllJobs } = useGetAllJobsQuery();
+  console.log("🚀 ~ ExperienceAbout ~ data:", getAllJobs);
   return (
     <div className="grid grid-cols-3 gap-12 w-full ">
       <div className="flex flex-col items-center">
@@ -24,7 +26,7 @@ const ExperienceAbout = () => {
       </div>
       <div className="flex flex-col items-center">
         <h1>Kayıtlı olan iş sayısı</h1>
-        <span className="font-bold text-2xl ">200+</span>
+        <span className="font-bold text-2xl ">{getAllJobs?.job?.length}+</span>
       </div>
       <div className="flex flex-col items-center">
         <h1>En çok proje paylaşan kişi</h1>

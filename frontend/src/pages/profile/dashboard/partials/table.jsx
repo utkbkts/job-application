@@ -31,7 +31,7 @@ const TablePart = () => {
             <TableRow key={index}>
               <TableCell>{FormatDate(item?.updatedAt)}</TableCell>
               <TableCell>{item?.job?.title}</TableCell>
-              <TableCell>{item?.job?.company?.name}</TableCell>
+              <TableCell>{item?.job?.companyName}</TableCell>
               <TableCell>
                 <Badge>{item?.status}</Badge>
               </TableCell>

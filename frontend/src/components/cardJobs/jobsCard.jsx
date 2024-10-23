@@ -1,17 +1,33 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { useApplyMutation } from "@/redux/api/applicationApi";
 import { Bookmark, MapPinned } from "lucide-react";
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import StarRatings from "react-star-ratings";
+import { toast } from "sonner";
 
 const JobsCard = ({ job }) => {
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.auth);
+  const [applyMutation, { isError, isSuccess, error }] = useApplyMutation();
 
   const isApplies = job?.applications?.some(
     (application) => application?.applicant?._id === user?._id || false
   );
+  console.log("🚀 ~ JobsCard ~ job:", job);
+  useEffect(() => {
+    if (isError) {
+      toast.error(error?.data?.message);
+    }
+    if (isSuccess) {
+      toast.success("Başvuru başarılı");
+    }
+  }, [error, isSuccess, isError]);
+  const handleClick = async (id) => {
+    await applyMutation({ id });
+  };
 
   return (
     <div className="w-full h-[400px] rounded-md border border-gray-400">
@@ -79,6 +95,7 @@ const JobsCard = ({ job }) => {
             Detay
           </Button>
           <Button
+            onClick={() => handleClick(job?._id)}
             disabled={isApplies}
             className="bg-purple-500 hover:bg-purple-600"
           >

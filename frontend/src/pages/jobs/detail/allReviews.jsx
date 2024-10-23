@@ -26,7 +26,7 @@ const AllReviews = ({ data }) => {
     await deleteReviews({ jobId: data?.job?._id, id: id });
   };
   return (
-    <div className="mb-8 mt-4 ">
+    <div className="mb-8 mt-4 flex flex-col gap-2">
       {getReviewsQuery?.reviews?.map((item) => (
         <>
           <div className="bg-gray-200 p-4 rounded-md flex justify-between">

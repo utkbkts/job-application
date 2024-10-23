@@ -19,13 +19,8 @@ const menuLinks = [
   },
   {
     id: 4,
-    href: "/bestUsers",
+    href: "/bestSoftware",
     title: "en iyi yazılımcılar",
-  },
-  {
-    id: 5,
-    href: "/bestJobs",
-    title: "en iyi işler",
   },
 ];
 
