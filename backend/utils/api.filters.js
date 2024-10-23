@@ -12,6 +12,9 @@ class apiFilter {
               title: { $regex: this.queryStr.search, $options: "i" },
             },
             {
+              companyName: { $regex: this.queryStr.search, $options: "i" },
+            },
+            {
               location: { $regex: this.queryStr.search, $options: "i" },
             },
           ],

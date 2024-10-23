@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 import StarRatings from "react-star-ratings";
 
 const JobsCard = ({ job }) => {
-  console.log("🚀 ~ JobsCard ~ job:", job);
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.auth);
 
@@ -54,7 +53,7 @@ const JobsCard = ({ job }) => {
           {job?.applications?.map((item) => (
             <img
               src={item?.applicant?.avatar?.url}
-              key={item.id}
+              key={item._id}
               className="rounded-full h-8 w-8 -m-2"
             />
           ))}

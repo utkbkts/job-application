@@ -14,7 +14,6 @@ const Jobs = () => {
   const ratings = searchParams.get("ratings");
   const location = searchParams.get("location");
   const companyName = searchParams.get("companyName");
-  console.log("🚀 ~ Jobs ~ companyName:", companyName);
   const title = searchParams.get("title");
   const params = { page, search };
 

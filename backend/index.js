@@ -10,6 +10,7 @@ import companyRouters from "./routes/company.routes.js";
 import jobsRouters from "./routes/jobs.routes.js";
 import applicationRouters from "./routes/application.routes.js";
 import reviewsRouters from "./routes/reviews.route.js";
+import analyticRouters from "./routes/analytic.route.js";
 
 dotenv.config();
 const app = express();
@@ -30,6 +31,7 @@ app.use("/api/company", companyRouters);
 app.use("/api/jobs", jobsRouters);
 app.use("/api/application", applicationRouters);
 app.use("/api/reviews", reviewsRouters);
+app.use("/api/analytic", analyticRouters);
 
 app.use(errorMiddleware);
 app.listen(process.env.PORT, () => {

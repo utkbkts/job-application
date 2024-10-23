@@ -1,3 +1,4 @@
+import { useTopReviewsQuery } from "@/redux/api/analyticApi";
 import { useGetAllusersQuery } from "@/redux/api/userApi";
 const ExperienceAbout = () => {
   const { data: getAllUsers } = useGetAllusersQuery();
@@ -7,6 +8,8 @@ const ExperienceAbout = () => {
   const lastUser = getAllUsers?.users
     ?.slice()
     .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))[0];
+  const { data } = useTopReviewsQuery();
+  console.log("🚀 ~ ExperienceAbout ~ data:", data);
   return (
     <div className="grid grid-cols-3 gap-12 w-full ">
       <div className="flex flex-col items-center">
@@ -31,12 +34,12 @@ const ExperienceAbout = () => {
         <h1>En çok yorum yapan kişi</h1>
         <div className="flex gap-1 items-center">
           <img
-            src={""}
+            src={data?.mostActiveUser?.userInfo?.avatar?.url}
             className="h-12 w-12 border-blue-400 border rounded-full"
             alt=""
           />
           <div>
-            <span>@"as</span>
+            <span>@{data?.mostActiveUser?.userInfo?.fullname}</span>
           </div>
         </div>
       </div>

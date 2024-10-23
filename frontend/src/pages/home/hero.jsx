@@ -1,65 +1,85 @@
 import { Button } from "@/components/ui/button";
-import { MapPinned, Search } from "lucide-react";
+import { MapPinned, Search, X } from "lucide-react";
 import { CarouselHome } from "./partials/carousel-home";
 import ExperienceAbout from "./partials/experienceAbout";
+import { useState } from "react";
+import LocationInput from "@/components/locationInput/locationInput";
+import { useNavigate } from "react-router-dom";
 
 const homeImage = [
-  {
-    id: 1,
-    image: "/home/1.jpg",
-  },
-  {
-    id: 2,
-    image: "/home/2.jpg",
-  },
-  {
-    id: 3,
-    image: "/home/3.jpg",
-  },
-  {
-    id: 4,
-    image: "/home/4.jpg",
-  },
-  {
-    id: 5,
-    image: "/home/5.jpg",
-  },
+  { id: 1, image: "/home/1.jpg" },
+  { id: 2, image: "/home/2.jpg" },
+  { id: 3, image: "/home/3.jpg" },
+  { id: 4, image: "/home/4.jpg" },
+  { id: 5, image: "/home/5.jpg" },
 ];
+
 const HeroPage = () => {
+  const [search, setSearch] = useState("");
+  const [location, setLocation] = useState("");
+  const navigate = useNavigate();
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+
+    const params = new URLSearchParams();
+
+    if (search) {
+      params.append("query", search);
+    }
+    if (location) {
+      params.append("location", location);
+    }
+
+    navigate(`/jobs?${params.toString()}`);
+  };
+
   return (
-    <div className="w-full flex flex-col   h-screen">
+    <div className="w-full flex flex-col h-screen">
       <div className="flex flex-col items-center gap-4">
         <h1 className="font-bold text-4xl">
           İlgi alanlarınıza ve becerilerinize uygun bir iş bulun
         </h1>
         <h2>Tüm lider sektörlerde binlerce iş fırsatı sizi bekliyor.</h2>
-        <div className="flex w-full relative">
+        <form onSubmit={onSubmit} className="flex w-full relative">
           <input
             type="text"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
             placeholder="iş ismi veya kelime"
             className="py-4 px-4 outline-none border border-r pl-10 w-full"
           />
           <Search
             color="rgba(197,153,229,1)"
-            className="absolute left-2 top-4"
+            className="absolute left-2 top-6"
           />
-          <div className="relative">
-            <input
-              type="text"
-              placeholder="konum"
-              className=" py-4 px-4 outline-none border pl-10 w-full"
+          <div className="relative py-4 px-4 outline-none border border-r pl-10">
+            <LocationInput
+              onLocationSelected={setLocation}
+              className={"border-none !outline-none focus:border-none"}
             />
             <MapPinned
               color="rgba(197,153,229,1)"
-              className="absolute left-2 top-4"
+              className="absolute left-2 top-6"
             />
+            {location && (
+              <div className="flex items-center gap-1 absolute -bottom-8">
+                <button type="button" onClick={() => setLocation("")}>
+                  <X size={20} />
+                </button>
+                <span className="text-sm whitespace-nowrap">{location}</span>
+              </div>
+            )}
           </div>
           <div>
-            <Button className="bg-purple-500 hover:bg-purple-600 h-full w-[120px]">
+            <Button
+              type="submit"
+              className="bg-purple-500 hover:bg-purple-600 h-full w-[120px]"
+            >
               İş bul
             </Button>
           </div>
-        </div>
+        </form>
         <div className="flex items-center pt-20">
           {homeImage.map((item) => (
             <img
@@ -70,10 +90,10 @@ const HeroPage = () => {
           ))}
         </div>
       </div>
-      <div className="flex items-center mt-20 ">
+      <div className="flex items-center mt-20">
         <CarouselHome />
       </div>
-      <div className="mt-28 ">
+      <div className="mt-28">
         <ExperienceAbout />
       </div>
     </div>
