@@ -5,6 +5,7 @@ import { authApi } from "./api/authApi";
 import { jobsApi } from "./api/jobsApi";
 import { applicationApi } from "./api/applicationApi";
 import { companyApi } from "./api/companyApi";
+import { reviewsApi } from "./api/reviewsApi";
 
 export const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ export const store = configureStore({
     [jobsApi.reducerPath]: jobsApi.reducer,
     [applicationApi.reducerPath]: applicationApi.reducer,
     [companyApi.reducerPath]: companyApi.reducer,
+    [reviewsApi.reducerPath]: reviewsApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat([
@@ -22,5 +24,6 @@ export const store = configureStore({
       jobsApi.middleware,
       applicationApi.middleware,
       companyApi.middleware,
+      reviewsApi.middleware,
     ]),
 });

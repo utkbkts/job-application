@@ -88,7 +88,7 @@ const GetAllJobs = catchAsyncError(async (req, res, next) => {
 const GetJobById = catchAsyncError(async (req, res, next) => {
   const jobId = req.params.id;
   const job = await Job.findById(jobId)
-    .populate("user applications company")
+    .populate("user applications company reviews")
     .populate({
       path: "applications",
       populate: { path: "applicant" },

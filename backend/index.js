@@ -9,6 +9,7 @@ import authRouters from "./routes/user.routes.js";
 import companyRouters from "./routes/company.routes.js";
 import jobsRouters from "./routes/jobs.routes.js";
 import applicationRouters from "./routes/application.routes.js";
+import reviewsRouters from "./routes/reviews.route.js";
 
 dotenv.config();
 const app = express();
@@ -28,6 +29,7 @@ app.use("/api/auth", authRouters);
 app.use("/api/company", companyRouters);
 app.use("/api/jobs", jobsRouters);
 app.use("/api/application", applicationRouters);
+app.use("/api/reviews", reviewsRouters);
 
 app.use(errorMiddleware);
 app.listen(process.env.PORT, () => {

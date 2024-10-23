@@ -3,8 +3,10 @@ import { Button } from "@/components/ui/button";
 import { Bookmark, MapPinned } from "lucide-react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import StarRatings from "react-star-ratings";
 
 const JobsCard = ({ job }) => {
+  console.log("🚀 ~ JobsCard ~ job:", job);
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.auth);
 
@@ -37,6 +39,17 @@ const JobsCard = ({ job }) => {
             </span>
           </div>
         </div>
+        <div className="p-2 flex items-center gap-2">
+          Toplam oy:
+          <StarRatings
+            rating={parseFloat(job?.ratings)}
+            starRatedColor="#ffb829"
+            numberOfStars={5}
+            name="ratings"
+            starDimension="14px"
+            starSpacing="1px"
+          />
+        </div>
         <div className="flex items-center pt-12 pl-4">
           {job?.applications?.map((item) => (
             <img
@@ -47,6 +60,7 @@ const JobsCard = ({ job }) => {
           ))}
           <span className="pl-4">+{job?.applications?.length} başvuranlar</span>
         </div>
+
         <div className="pt-4">
           <Badge className={"text-blue-700 font-bold"} variant={"ghost"}>
             {job?.experience}

@@ -21,7 +21,7 @@ export const jobsApi = createApi({
             companyName: params?.companyName,
             "salary[gte]": params?.min,
             "salary[lte]": params?.max,
-            "ratings[lte]": params?.ratings,
+            "ratings[eq]": params?.ratings,
           },
         };
       },

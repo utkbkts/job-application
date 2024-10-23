@@ -14,7 +14,6 @@ const fixedSalaryRanges = [
 ];
 
 const FilterDataGroup = ({ data }) => {
-  console.log("🚀 ~ FilterDataGroup ~ data:", data);
   let [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
 

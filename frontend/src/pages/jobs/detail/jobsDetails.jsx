@@ -8,6 +8,9 @@ import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { toast } from "sonner";
+import AllReviews from "./allReviews";
+import { Separator } from "@/components/ui/separator";
+import NewReviews from "./newReviews";
 
 const JobsDetails = () => {
   const { id } = useParams();
@@ -124,6 +127,12 @@ const JobsDetails = () => {
           </h3>
           <Markdown>{data?.job?.description}</Markdown>
         </div>
+        <Separator />
+        <div className="overflow-x-auto h-[600px]">
+          <h1 className="font-bold text-2xl">Tüm Yorumlar</h1>
+          <AllReviews data={data} />
+        </div>
+        <NewReviews data={data} />
       </div>
     </div>
   );

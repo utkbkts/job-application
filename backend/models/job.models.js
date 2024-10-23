@@ -17,6 +17,12 @@ const jobSchema = new mongoose.Schema(
         ref: "Application",
       },
     ],
+    reviews: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Reviews",
+      },
+    ],
     title: {
       type: String,
       required: true,
@@ -78,6 +84,15 @@ const jobSchema = new mongoose.Schema(
     companyLogo: {
       public_id: { type: String },
       url: { type: String },
+    },
+    ratings: {
+      type: Number,
+      default: 0,
+    },
+
+    numOfReviews: {
+      type: Number,
+      default: 0,
     },
   },
   { timestamps: true }
