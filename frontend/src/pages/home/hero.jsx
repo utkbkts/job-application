@@ -34,7 +34,6 @@ const HeroPage = () => {
     register,
     formState: { errors },
   } = form;
-  console.log("🚀 ~ HeroPage ~ errors:", errors);
   const onSubmit = () => {
     const params = new URLSearchParams();
 

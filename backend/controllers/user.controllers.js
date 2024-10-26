@@ -103,7 +103,6 @@ const updateProfile = async (req, res) => {
 
     const userId = req.user._id;
     let user = await User.findById(userId);
-    console.log("🚀 ~ updateProfile ~ user:", user);
 
     if (!user) {
       return res.status(400).json({
@@ -124,8 +123,6 @@ const updateProfile = async (req, res) => {
       user.profile.resume = cloudResponse.secure_url;
       user.profile.resumeOriginalName = req.file.originalname;
     }
-
-    console.log("🚀 ~ updateProfile ~ cloudResponse:", cloudResponse);
 
     await user.save();
 

@@ -127,7 +127,6 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
       setLoading(false);
     }
   };
-  console.log(input);
   return (
     <div>
       <Dialog open={open}>

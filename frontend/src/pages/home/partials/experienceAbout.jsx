@@ -12,7 +12,6 @@ const ExperienceAbout = () => {
   const { data } = useTopReviewsQuery();
   const { data: getAllJobs } = useGetAllJobsQuery();
   const { data: bestUser } = useTopUserQuery();
-  console.log("🚀 ~ ExperienceAbout ~ bestUser:", bestUser);
   return (
     <div className="grid grid-cols-3 gap-12 w-full ">
       <div className="flex flex-col items-center">
