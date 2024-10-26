@@ -14,12 +14,18 @@ import reviewsRouters from "./routes/reviews.route.js";
 import analyticRouters from "./routes/analytic.route.js";
 import projectRouters from "./routes/project.route.js";
 import path from "path";
-
-dotenv.config();
 const app = express();
+
+app.use(cookieParser());
+dotenv.config();
+app.use(
+  cors({
+    origin: process.env.FRONTEND_URL,
+    credentials: true,
+  })
+);
 const __dirname = path.resolve();
 //middleware
-app.use(cookieParser());
 //CSP settings
 app.use(
   helmet.contentSecurityPolicy({
@@ -40,12 +46,6 @@ app.use(
 
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ extended: true, limit: "50mb" }));
-app.use(
-  cors({
-    origin: process.env.FRONTEND_URL,
-    credentials: true,
-  })
-);
 
 //routes
 app.use("/api/auth", authRouters);
