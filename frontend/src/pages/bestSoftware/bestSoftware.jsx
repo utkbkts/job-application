@@ -120,9 +120,11 @@ const BestSoftware = () => {
             <Badge className="bg-purple-50 text-purple-600 px-3 py-1 rounded-lg">
               {developer.category}
             </Badge>
-            <button className="text-purple-600 font-semibold hover:underline">
-              Detayları Gör
-            </button>
+            <Link to={`/bestProject/detail/${developer?._id}`}>
+              <button className="text-purple-600 font-semibold hover:underline">
+                Detayları Gör
+              </button>
+            </Link>
           </div>
           <div className="mt-6">
             <Link to={developer.githubLink} target="_blank">

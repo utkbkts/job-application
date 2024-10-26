@@ -64,7 +64,6 @@ const updateShareProject = catchAsyncError(async (req, res, next) => {
 
 const deleteShareProject = catchAsyncError(async (req, res, next) => {
   const projectId = req.params.id;
-  console.log("🚀 ~ deleteShareProject ~ projectId:", projectId);
 
   const project = await Project.findOne({
     _id: projectId,
@@ -90,7 +89,9 @@ const shareIdProject = catchAsyncError(async (req, res, next) => {
 
   const project = await Project.findOne({
     _id: projectId,
-  }).lean();
+  })
+    .lean()
+    .populate("reviews.user");
 
   if (!project) {
     return next(new ErrorHandler("proje bulunamadı.", 404));
@@ -131,6 +132,89 @@ const projectsAll = catchAsyncError(async (req, res, next) => {
   });
 });
 
+const createProductReview = catchAsyncError(async (req, res, next) => {
+  const { rating, comment, projectId } = req.body;
+
+  const review = {
+    user: req.user._id,
+    name: req.user.name,
+    rating: Number(rating),
+    comment,
+  };
+
+  const project = await Project.findById(projectId);
+  if (!project) {
+    return next(new ErrorHandler("project not found !", 404));
+  }
+
+  const isReviewd = project?.reviews.find(
+    (item) => item.user.toString() === req.user._id.toString()
+  );
+
+  if (isReviewd) {
+    project.reviews.forEach((review) => {
+      if (review?.user?.toString() === req?.user?._id.toString()) {
+        review.comment = comment;
+        review.rating = rating;
+      }
+    });
+  } else {
+    project.reviews.push(review);
+    project.numOfReviews = project.reviews.length;
+  }
+
+  project.ratings =
+    project.reviews.reduce((acc, item) => item.rating + acc, 0) /
+    project.reviews.length;
+  await project.save({ validateBeforeSave: false });
+
+  return res.status(200).json({
+    message: "Yorum başarılı şekilde gönderildi",
+  });
+});
+const getProductReview = catchAsyncError(async (req, res, next) => {
+  const project = await Project.findById(req.query.id).populate("reviews.user");
+
+  if (!project) {
+    return next(new ErrorHandler("Product not found !", 404));
+  }
+  return res.status(200).json({
+    reviews: project.reviews,
+  });
+});
+
+const deleteReview = catchAsyncError(async (req, res, next) => {
+  let project = await Project.findById(req.query.projectId);
+
+  if (!project) {
+    return next(new ErrorHandler("project not found !", 404));
+  }
+
+  const reviews = project?.reviews?.filter(
+    (reviwe) => reviwe._id.toString() !== req?.query?.id.toString()
+  );
+  const numOfReviews = reviews.length;
+  const ratings =
+    numOfReviews === 0
+      ? 0
+      : project.reviews.reduce((acc, item) => item.rating + acc, 0) /
+        numOfReviews;
+
+  project = await Project.findByIdAndUpdate(
+    req.query.projectId,
+    {
+      reviews,
+      numOfReviews,
+      ratings,
+    },
+    { new: true }
+  );
+
+  return res.status(200).json({
+    success: true,
+    project,
+  });
+});
 export default {
   createShareProject,
   updateShareProject,
@@ -138,4 +222,7 @@ export default {
   shareIdProject,
   myProjects,
   projectsAll,
+  createProductReview,
+  getProductReview,
+  deleteReview,
 };

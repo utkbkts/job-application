@@ -12,6 +12,10 @@ const reviewsSchema = new mongoose.Schema(
       ref: "Job",
       required: true,
     },
+    project: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Project",
+    },
     rating: {
       type: Number,
       required: true,

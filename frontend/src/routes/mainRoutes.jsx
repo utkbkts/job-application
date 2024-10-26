@@ -3,6 +3,7 @@ import MainLayout from "@/layouts/mainLayout";
 import Login from "@/pages/auth/login/login";
 import Register from "@/pages/auth/register/register";
 import BestSoftware from "@/pages/bestSoftware/bestSoftware";
+import BestSoftwareDetails from "@/pages/bestSoftware/details/bestSoftwareDetails";
 import Company from "@/pages/companies/company";
 import HomePage from "@/pages/home/homePage";
 import JobsDetails from "@/pages/jobs/detail/jobsDetails";
@@ -41,6 +42,9 @@ export const MainRoutes = {
       path: "/bestSoftware",
       element: <BestSoftware />,
     },
-  
+    {
+      path: "/bestProject/detail/:id",
+      element: <BestSoftwareDetails />,
+    },
   ],
 };

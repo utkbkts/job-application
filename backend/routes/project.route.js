@@ -36,4 +36,18 @@ router.get(
 
 router.get("/projectsAll", projectShareControllers.projectsAll);
 
+router.put(
+  "/projectReview",
+  isAuthenticatedUser,
+  projectShareControllers.createProductReview
+);
+
+router.get("/projectReview", projectShareControllers.getProductReview);
+
+router.delete(
+  "/projectReview",
+  isAuthenticatedUser,
+  projectShareControllers.deleteReview
+);
+
 export default router;
