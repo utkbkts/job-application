@@ -20,7 +20,17 @@ const app = express();
 const __dirname = path.resolve();
 //middleware
 app.use(cookieParser());
-app.use(helmet());
+//CSP settings
+app.use(
+  helmet.contentSecurityPolicy({
+    useDefaults: true,
+    directives: {
+      "default-src": ["'self'"],
+      "img-src": ["'self'", "https:", "data:", "https://res.cloudinary.com"],
+      "frame-ancestors": ["'self'"],
+    },
+  })
+);
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ extended: true, limit: "50mb" }));
 app.use(
