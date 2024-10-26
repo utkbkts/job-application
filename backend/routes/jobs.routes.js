@@ -20,11 +20,6 @@ router.get("/get/all", jobsControllers.GetAllJobs);
 
 router.get("/jobId/:id", jobsControllers.GetJobById);
 
-router.get(
-  "/get/adminId",
-  authhorizeRoles("admin"),
-  isAuthenticatedUser,
-  jobsControllers.GetAdminJobs
-);
+router.get("/myAds", isAuthenticatedUser, jobsControllers.getMyAds);
 
 export default router;

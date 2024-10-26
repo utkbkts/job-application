@@ -41,5 +41,6 @@ export const MainRoutes = {
       path: "/bestSoftware",
       element: <BestSoftware />,
     },
+  
   ],
 };

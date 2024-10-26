@@ -20,7 +20,28 @@ export const applicationApi = createApi({
     }),
     getUserJobs: builder.query({
       query: () => "/get/userjobs",
+      providesTags: ["Apply"],
+    }),
+    getApplicationAds: builder.query({
+      query: ({ id }) => `/get/userjobsdetail/${id}`,
+      providesTags: ["Apply"],
+    }),
+
+    updatePost: builder.mutation({
+      query({ body, id }) {
+        return {
+          url: `/update/${id}`,
+          method: "PUT",
+          body,
+        };
+      },
+      invalidatesTags: ["Apply"],
     }),
   }),
 });
-export const { useApplyMutation, useGetUserJobsQuery } = applicationApi;
+export const {
+  useApplyMutation,
+  useGetUserJobsQuery,
+  useUpdatePostMutation,
+  useGetApplicationAdsQuery,
+} = applicationApi;

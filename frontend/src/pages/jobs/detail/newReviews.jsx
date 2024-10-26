@@ -1,5 +1,4 @@
 /* eslint-disable no-unused-vars */
-import RichTextEditor from "@/components/richTextEditor/richTextEditor";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -10,10 +9,11 @@ import {
 } from "@/components/ui/form";
 import { Label } from "@/components/ui/label";
 import LoadingButton from "@/components/ui/loadingButton";
+import { Textarea } from "@/components/ui/textarea";
 import { useCreateReviewsMutation } from "@/redux/api/reviewsApi";
 import { reviewsSchema } from "@/schemas/reviewsSchema/reviewsSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { draftToMarkdown } from "markdown-draft-js";
+
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
@@ -98,15 +98,7 @@ const NewReviews = ({ data }) => {
                 <FormItem>
                   <Label>Açıklama</Label>
                   <FormControl>
-                    <RichTextEditor
-                      value={editorContent} // Editor'e state'deki içeriği bağlama
-                      onChange={(draft) => {
-                        const markdown = draftToMarkdown(draft);
-                        setValue("comment", markdown);
-                        setEditorContent(draft); // Editor'ün içeriğini state'e kaydetme
-                      }}
-                      ref={field.ref}
-                    />
+                    <Textarea placeholder="Mesajınız" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

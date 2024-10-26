@@ -33,7 +33,6 @@ const CompanyCreate = () => {
     control,
     formState: { errors },
   } = form;
-  console.log("🚀 ~ CompanyCreate ~ errors:", errors);
   const onFinish = (values) => {
     dispatch(setisCompany(values));
     toast.success("Başarıyla kaydedildi");

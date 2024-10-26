@@ -1,4 +1,5 @@
 import catchAsyncError from "../middleware/catch.middleware.js";
+import Project from "../models/projects.models.js";
 import Reviews from "../models/reviews.models.js";
 import ErrorHandler from "../utils/error.handler.js";
 
@@ -46,5 +47,37 @@ const getMostActiveUser = catchAsyncError(async (req, res, next) => {
     mostActiveUser: mostActiveUser[0], // Kullanıcı ve yorum bilgileri
   });
 });
+const projectShareBest = catchAsyncError(async (req, res, next) => {
+  const bestShareProject = await Project.aggregate([
+    {
+      $group: {
+        _id: "$user",
+        projectCount: { $sum: 1 },
+      },
+    },
+    {
+      $sort: { projectCount: -1 },
+    },
+    {
+      $lookup: {
+        from: "users", // Kullanıcıların saklandığı koleksiyon ismi
+        localField: "_id", // Project'deki user field'ı
+        foreignField: "_id", // User modelindeki _id field'ı
+        as: "userInfo", // Kullanıcı bilgilerini almak için kullanılacak alias
+      },
+    },
+    {
+      $unwind: "$userInfo", // Kullanıcı bilgilerini düzleştir
+    },
+    {
+      $limit: 1, // En çok proje paylaşan kullanıcıyı almak için limit koyuyoruz
+    },
+  ]);
 
-export default { getMostActiveUser };
+  res.status(200).json({
+    success: true,
+    data: bestShareProject,
+  });
+});
+
+export default { getMostActiveUser, projectShareBest };

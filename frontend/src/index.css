@@ -117,3 +117,7 @@
 .completed:not(:first-child)::before {
   @apply bg-green-600;
 }
+.ProseMirror {
+  white-space: normal !important;
+  word-break: break-word !important;
+}

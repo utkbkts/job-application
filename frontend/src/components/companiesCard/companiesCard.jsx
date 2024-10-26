@@ -3,7 +3,6 @@ import { Button } from "../ui/button";
 import { useNavigate } from "react-router-dom";
 
 const CompaniesCard = ({ job }) => {
-  console.log("🚀 ~ CompaniesCard ~ job:", job);
   const navigate = useNavigate();
   return (
     <div className="w-full h-full rounded-lg border border-gray-200 shadow-lg bg-white transition-transform transform hover:-translate-y-1 hover:shadow-2xl">

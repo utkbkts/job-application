@@ -88,17 +88,22 @@ const updateProfile = async (req, res) => {
   try {
     const { fullname, email, phoneNumber, bio, skills } = req.body;
 
-    const fileUri = getDataUri(req.file);
-    const cloudResponse = await cloudinary.uploader.upload(fileUri.content, {
-      folder: "jobs/resume",
-    });
+    let cloudResponse;
+    if (req.file) {
+      const fileUri = getDataUri(req.file);
+      cloudResponse = await cloudinary.uploader.upload(fileUri.content, {
+        folder: "jobs/resume",
+      });
+    }
 
     let skillsArray;
     if (skills) {
-      skillsArray = skills.split(",");
+      skillsArray = skills.split(",").map((skill) => skill.trim()); // Becerileri temizle
     }
+
     const userId = req.user._id;
     let user = await User.findById(userId);
+    console.log("🚀 ~ updateProfile ~ user:", user);
 
     if (!user) {
       return res.status(400).json({
@@ -106,16 +111,21 @@ const updateProfile = async (req, res) => {
         success: false,
       });
     }
+
+    // Kullanıcı bilgilerini güncelle
     if (fullname) user.fullname = fullname;
     if (email) user.email = email;
     if (phoneNumber) user.phoneNumber = phoneNumber;
     if (bio) user.profile.bio = bio;
     if (skills) user.profile.skills = skillsArray;
 
+    // Eğer yeni bir dosya yüklendiyse, özgeçmişi güncelle
     if (cloudResponse) {
       user.profile.resume = cloudResponse.secure_url;
       user.profile.resumeOriginalName = req.file.originalname;
     }
+
+    console.log("🚀 ~ updateProfile ~ cloudResponse:", cloudResponse);
 
     await user.save();
 
@@ -141,7 +151,6 @@ const updateProfile = async (req, res) => {
     });
   }
 };
-
 const GetUserMyProfile = catchAsyncError(async (req, res, next) => {
   const user = await User.findById(req?.user?._id);
 

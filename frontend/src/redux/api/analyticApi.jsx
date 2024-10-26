@@ -12,7 +12,11 @@ export const analyticApi = createApi({
       query: () => "/topReviews",
       providesTags: ["Analytic"],
     }),
+    topUser: builder.query({
+      query: () => "/topUser",
+      providesTags: ["Analytic"],
+    }),
   }),
 });
 
-export const { useTopReviewsQuery } = analyticApi;
+export const { useTopReviewsQuery, useTopUserQuery } = analyticApi;

@@ -103,13 +103,14 @@ const GetJobById = catchAsyncError(async (req, res, next) => {
   });
 });
 
-const GetAdminJobs = catchAsyncError(async (req, res, next) => {
-  const adminId = req.user._id;
-
-  const job = await Job.find({ user: adminId }).populate({
-    path: "company",
-    createdAt: -1,
-  });
+const getMyAds = catchAsyncError(async (req, res, next) => {
+  const userId = req.user._id;
+  const job = await Job.find({ user: userId })
+    .populate("user applications company reviews")
+    .populate({
+      path: "applications",
+      populate: { path: "applicant" },
+    });
 
   if (!job) {
     return next(new ErrorHandler("jobs not found", 404));
@@ -120,4 +121,9 @@ const GetAdminJobs = catchAsyncError(async (req, res, next) => {
   });
 });
 
-export default { PostJob, GetAllJobs, GetJobById, GetAdminJobs };
+export default {
+  PostJob,
+  GetAllJobs,
+  GetJobById,
+  getMyAds,
+};

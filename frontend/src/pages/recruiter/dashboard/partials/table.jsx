@@ -18,7 +18,6 @@ import { useGetCompanyQuery } from "@/redux/api/companyApi";
 import { Edit2, MoreHorizontal } from "lucide-react";
 const TableDashboard = () => {
   const { data } = useGetCompanyQuery();
-  console.log("🚀 ~ TableDashboard ~ data:", data);
   return (
     <Table>
       <TableCaption>Son kayıtlı şirketlerinizin listesi</TableCaption>

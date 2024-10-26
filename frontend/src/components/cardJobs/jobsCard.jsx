@@ -16,7 +16,6 @@ const JobsCard = ({ job }) => {
   const isApplies = job?.applications?.some(
     (application) => application?.applicant?._id === user?._id || false
   );
-  console.log("🚀 ~ JobsCard ~ job:", job);
   useEffect(() => {
     if (isError) {
       toast.error(error?.data?.message);

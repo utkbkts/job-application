@@ -2,10 +2,7 @@ import {
   ArrowRight,
   CirclePlus,
   FileSpreadsheet,
-  FileUser,
-  KeyRound,
   LayoutDashboard,
-  RotateCcw,
 } from "lucide-react";
 import { motion, useAnimationControls } from "framer-motion";
 import { useEffect, useState } from "react";
@@ -14,26 +11,19 @@ const settings = [
   {
     id: 1,
     name: "Ana sayfa",
-    url: "/recruiter/dashboard",
+    url: "/profile",
     icon: <LayoutDashboard />,
   },
   {
     id: 2,
-    name: "İş ilanı aç",
-    url: "/recruiter/create",
+    name: "Proje Paylaş",
+    url: "/profile/create",
     icon: <CirclePlus />,
   },
   {
     id: 3,
-    name: "Şirket ekle",
-    url: "/recruiter/companies/create",
-    icon: <CirclePlus />,
-  },
-
-  {
-    id: 4,
-    name: "Başvurular",
-    url: "/recruiter/applicant",
+    name: "Projelerim",
+    url: "/profile/projects",
     icon: <FileSpreadsheet />,
   },
 ];
@@ -65,7 +55,7 @@ const svgVariant = {
   },
 };
 
-const SidebarAside = () => {
+const UserSidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation().pathname;
   const [active, setActive] = useState(location);
@@ -144,4 +134,4 @@ const SidebarAside = () => {
   );
 };
 
-export default SidebarAside;
+export default UserSidebar;

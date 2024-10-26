@@ -11,15 +11,19 @@ import { toast } from "sonner";
 import AllReviews from "./allReviews";
 import { Separator } from "@/components/ui/separator";
 import NewReviews from "./newReviews";
+import StarRatings from "react-star-ratings";
 
 const JobsDetails = () => {
   const { id } = useParams();
   const { data } = useGetJobByIdQuery({ id });
   const [applyMutation, { isError, isSuccess, error }] = useApplyMutation();
   const { user } = useSelector((state) => state.auth);
-  const isApplies = data?.job?.applications?.some(
-    (application) => application?.applicant?._id === user?._id || false
+  const application = data?.job?.applications?.find(
+    (application) => application?.applicant?._id === user?._id
   );
+
+  const isApplies = !!application;
+  const isCancelled = application?.status === "reddedildi";
 
   useEffect(() => {
     if (isError) {
@@ -66,7 +70,11 @@ const JobsDetails = () => {
               : "bg-blue-600 hover:bg-blue-700"
           } text-white py-3 px-8 rounded-full font-semibold shadow-lg transition-all duration-300 ease-in-out`}
         >
-          {isApplies ? "Başvuruldu" : "Şimdi Başvur"}
+          {isApplies
+            ? isCancelled
+              ? "Başvurunuz iptal edildi."
+              : "Başvuruldu"
+            : "Şimdi Başvur"}
         </Button>
       </div>
 
@@ -120,6 +128,21 @@ const JobsDetails = () => {
           <p className="text-lg text-gray-600">
             {FormatDate(data?.job?.updatedAt)}
           </p>
+        </div>
+        <div className=" flex items-center gap-2">
+          <h3 className="font-semibold text-xl w-40 text-gray-800">
+            Toplam Oy:
+          </h3>
+          <StarRatings
+            rating={data?.job?.ratings}
+            starRatedColor="#ffb829"
+            numberOfStars={5}
+            name="ratings"
+            starDimension="14px"
+            starSpacing="1px"
+          />
+          <span>({data?.job?.numOfReviews}) yorum bulunuyor.</span>
+          <span>({data?.job?.ratings})/5 </span>
         </div>
         <div className="flex items-start flex-col">
           <h3 className="font-semibold text-xl w-40 text-gray-800">

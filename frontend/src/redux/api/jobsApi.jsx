@@ -10,7 +10,6 @@ export const jobsApi = createApi({
   endpoints: (builder) => ({
     getAllJobs: builder.query({
       query: (params) => {
-        console.log("🚀 ~ title:", params);
         return {
           url: "/get/all",
           params: {
@@ -39,15 +38,16 @@ export const jobsApi = createApi({
       query: ({ id }) => `/jobId/${id}`,
       providesTags: ["Apply", "User"],
     }),
-    getAdminJobs: builder.query({
-      query: () => "/get/adminId",
+    getMyAds: builder.query({
+      query: () => `/myAds`,
+      providesTags: ["Apply", "User"],
     }),
   }),
 });
 
 export const {
   useGetAllJobsQuery,
-  useGetAdminJobsQuery,
   useGetJobByIdQuery,
   useCreateJobsMutation,
+  useGetMyAdsQuery,
 } = jobsApi;

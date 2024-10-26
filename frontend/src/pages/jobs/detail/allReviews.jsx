@@ -5,6 +5,7 @@ import {
   useGetReviewsQuery,
 } from "@/redux/api/reviewsApi";
 import { useEffect } from "react";
+import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { toast } from "sonner";
 
@@ -13,6 +14,7 @@ const AllReviews = ({ data }) => {
   const { data: getReviewsQuery } = useGetReviewsQuery({ jobId: id });
   const [deleteReviews, { isSuccess, isError, error }] =
     useDeleteReviewsMutation();
+  const { user } = useSelector((state) => state.auth);
   useEffect(() => {
     if (isError) {
       toast.error(error?.data?.message);
@@ -42,14 +44,16 @@ const AllReviews = ({ data }) => {
                 <p>{item?.comment}</p>
               </div>
             </div>
-            <div>
-              <Button
-                onClick={() => handleClick(item._id)}
-                className="bg-blue-600 hover:bg-blue-700"
-              >
-                Sil
-              </Button>
-            </div>
+            {user._id === data?.job?.user?._id && (
+              <div>
+                <Button
+                  onClick={() => handleClick(item?._id)}
+                  className="bg-blue-600 hover:bg-blue-700"
+                >
+                  Sil
+                </Button>
+              </div>
+            )}
           </div>
         </>
       ))}

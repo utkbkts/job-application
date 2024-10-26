@@ -13,7 +13,6 @@ import { useGetUserJobsQuery } from "@/redux/api/applicationApi";
 
 const TablePart = () => {
   const { data } = useGetUserJobsQuery();
-  console.log("🚀 ~ TablePart ~ data:", data);
   return (
     <div>
       <Table>

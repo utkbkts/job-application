@@ -80,9 +80,7 @@ const RecruiterCreate = () => {
   }, [isError, isSuccess, error]);
 
   const onSubmit = async (values) => {
-   
     await createJobs(values);
-    console.log("Form değerleri:", values);
   };
 
   return (

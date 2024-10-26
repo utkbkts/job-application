@@ -13,32 +13,44 @@ import LoadingButton from "@/components/ui/loadingButton";
 import { useGetUserQuery } from "@/redux/api/userApi";
 import { setUser } from "@/redux/features/userSlice";
 import axios from "axios";
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { Edit } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { useDispatch } from "react-redux";
 import { toast } from "sonner";
 
 const UpdateProfileDialog = ({ open, setOpen }) => {
   const [loading, setLoading] = useState(false);
   const { data } = useGetUserQuery();
-  const { user } = useSelector((state) => state.auth);
+  const fileInputRef = useRef(null);
 
-  const [input, setInput] = useState({
-    fullname: user?.fullname || "",
-    email: user?.email || "",
-    phoneNumber: user?.phoneNumber || "",
-    bio: user?.profile?.bio || "",
-    skills: user?.profile?.skills?.map((skill) => skill) || "",
-    file: user?.profile?.resume || "",
-  });
-  const dispatch = useDispatch();
-  //images
-  const fileChangeHandler = (e) => {
-    const file = e.target.files[0];
-    setInput((prevState) => ({
-      ...prevState,
-      file: file,
-    }));
+  const handleEditClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
   };
+  const [input, setInput] = useState({
+    fullname: "",
+    email: "",
+    phoneNumber: "",
+    bio: "",
+    skills: [],
+    file: "",
+  });
+
+  useEffect(() => {
+    if (data) {
+      setInput({
+        fullname: data.fullname || "",
+        email: data.email || "",
+        phoneNumber: data.phoneNumber || "",
+        bio: data.profile?.bio || "",
+        skills: data.profile?.skills || [],
+        file: data.profile?.resume || "", // Mevcut dosya ismi
+      });
+    }
+  }, [data]);
+
+  const dispatch = useDispatch();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -53,6 +65,22 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
     }
   };
 
+  const fileChangeHandler = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setInput((prevState) => ({
+        ...prevState,
+        file: file,
+      }));
+    } else {
+      // Eğer kullanıcı yeni bir dosya seçmediyse, mevcut dosya URL'sini kullan
+      setInput((prevState) => ({
+        ...prevState,
+        file: data?.profile?.resume || "",
+      }));
+    }
+  };
+
   const submitHandler = async (e) => {
     e.preventDefault();
     const formData = new FormData();
@@ -61,9 +89,21 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
     formData.append("phoneNumber", input.phoneNumber);
     formData.append("bio", input.bio);
     formData.append("skills", input.skills);
-    if (input.file) {
-      formData.append("file", input.file);
+    if (input.avatar instanceof File) {
+      formData.append("avatar", input.avatar);
     }
+
+    // Eğer yeni bir dosya varsa, onu ekle
+    if (input.file instanceof File) {
+      formData.append("file", input.file);
+    } else {
+      // Eğer yeni bir dosya yüklenmemişse mevcut özgeçmiş URL'sini ekle
+      const existingResume = data?.profile?.resume;
+      if (existingResume) {
+        formData.append("resume", existingResume);
+      }
+    }
+
     try {
       setLoading(true);
       const res = await axios.post(
@@ -87,7 +127,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
       setLoading(false);
     }
   };
-
+  console.log(input);
   return (
     <div>
       <Dialog open={open}>
@@ -102,7 +142,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
           <form onSubmit={submitHandler}>
             <div className="grid gap-4 py-4 grid-cols-4 items-center">
               <label htmlFor="fullname" className="text-right">
-                Name
+                Ad
               </label>
               <Input
                 id="fullname"
@@ -155,7 +195,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
               <Input
                 id="skills"
                 name="skills"
-                value={input.skills}
+                value={input.skills.join(", ")} // Becerileri virgülle ayırarak göster
                 onChange={handleChange}
                 className="col-span-3"
                 placeholder=", ile ayırın."
@@ -163,7 +203,12 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
             </div>
             <div className="grid gap-4 py-4 grid-cols-4 items-center">
               <Label htmlFor="file" className="text-right">
-                Öz geçmiş
+                Öz geçmiş{" "}
+                {input.file
+                  ? `(${input.file.name})`
+                  : data?.profile?.resumeOriginalName
+                  ? `(${data.profile.resumeOriginalName})`
+                  : "(Seçilmedi)"}
               </Label>
               <Input
                 id="file"

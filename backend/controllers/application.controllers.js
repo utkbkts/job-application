@@ -6,7 +6,6 @@ const submitJobApplication = async (req, res, next) => {
   const userId = req?.user?._id;
 
   const jobId = req.params.id;
-  console.log("🚀 ~ submitJobApplication ~ jobId:", jobId);
 
   const existingApplication = await Application.findOne({
     job: jobId,
@@ -51,7 +50,6 @@ const listJobApplications = async (req, res, next) => {
   if (!application) {
     return next(new ErrorHandler("başvuru bulunamadı.", 404));
   }
-
   return res.status(201).json({
     application,
   });
@@ -85,6 +83,12 @@ const updateJobApplicants = async (req, res, next) => {
     return next(new ErrorHandler("başvuru bulunamadı."));
   }
 
+  if (application.status === "onaylandı") {
+    return next(new ErrorHandler("Bu cv'yi zaten onayladınız", 400));
+  }
+  if (application.status === "reddedildi") {
+    return next(new ErrorHandler("Bu cv'yi zaten reddettiniz", 400));
+  }
   application.status = status;
   await application.save();
 

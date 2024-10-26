@@ -5,6 +5,7 @@ import CompanyCreate from "@/pages/recruiter/companyCreate/companyCreate";
 import CompanyDetails from "@/pages/recruiter/companyCreate/partials/companyDetails";
 import RecruiterCreate from "@/pages/recruiter/create/recruiterCreate";
 import RecruiterDashboard from "@/pages/recruiter/dashboard/recruiterDashboard";
+import MyAds from "../pages/recruiter/myAds/myAds";
 
 export const RecruiterRoutes = {
   path: "/recruiter",
@@ -27,6 +28,10 @@ export const RecruiterRoutes = {
     {
       path: "companies/companyDetails",
       element: <CompanyDetails />,
+    },
+    {
+      path: "applicant",
+      element: <MyAds />,
     },
   ],
 };
