@@ -12,6 +12,7 @@ import applicationRouters from "./routes/application.routes.js";
 import reviewsRouters from "./routes/reviews.route.js";
 import analyticRouters from "./routes/analytic.route.js";
 import projectRouters from "./routes/project.route.js";
+import path from "path";
 
 dotenv.config();
 const app = express();
@@ -36,6 +37,14 @@ app.use("/api/analytic", analyticRouters);
 app.use("/api/projects", projectRouters);
 
 app.use(errorMiddleware);
+
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "/frontend/dist")));
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "frontend", "dist", "index.html"));
+  });
+}
+
 app.listen(process.env.PORT, () => {
   ConnectedMongoDB();
   console.log(`server is running ${process.env.PORT}`);
