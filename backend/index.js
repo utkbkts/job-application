@@ -1,7 +1,6 @@
 import express from "express";
 import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
-import helmet from "helmet";
 import cors from "cors";
 import ConnectedMongoDB from "./db/connected.mongodb.js";
 import errorMiddleware from "./middleware/error.middleware.js";
@@ -26,23 +25,7 @@ app.use(
 );
 const __dirname = path.resolve();
 //middleware
-//CSP settings
-app.use(
-  helmet.contentSecurityPolicy({
-    useDefaults: true,
-    directives: {
-      "default-src": ["'self'"],
-      "script-src": ["'self'", "https://upload-widget.cloudinary.com"],
-      "img-src": [
-        "'self'",
-        "https:",
-        "data:",
-        "https://upload-widget.cloudinary.com",
-      ],
-      "frame-ancestors": ["'self'"],
-    },
-  })
-);
+app.use(cookieParser());
 
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ extended: true, limit: "50mb" }));
