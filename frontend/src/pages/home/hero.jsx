@@ -5,6 +5,9 @@ import ExperienceAbout from "./partials/experienceAbout";
 import { useState } from "react";
 import LocationInput from "@/components/locationInput/locationInput";
 import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { searchSchema } from "@/schemas/searchSchema/searchSchema";
 
 const homeImage = [
   { id: 1, image: "/home/1.jpg" },
@@ -15,17 +18,28 @@ const homeImage = [
 ];
 
 const HeroPage = () => {
-  const [search, setSearch] = useState("");
   const [location, setLocation] = useState("");
   const navigate = useNavigate();
 
-  const onSubmit = (e) => {
-    e.preventDefault();
+  const form = useForm({
+    resolver: zodResolver(searchSchema),
+    mode: "onChange",
+    defaultValues: {
+      search: "",
+    },
+  });
 
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = form;
+  console.log("🚀 ~ HeroPage ~ errors:", errors);
+  const onSubmit = () => {
     const params = new URLSearchParams();
 
-    if (search) {
-      params.append("query", search);
+    if (form.getValues("search")) {
+      params.append("query", form.getValues("search"));
     }
     if (location) {
       params.append("location", location);
@@ -41,14 +55,21 @@ const HeroPage = () => {
           İlgi alanlarınıza ve becerilerinize uygun bir iş bulun
         </h1>
         <h2>Tüm lider sektörlerde binlerce iş fırsatı sizi bekliyor.</h2>
-        <form onSubmit={onSubmit} className="flex w-full relative">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="flex w-full relative"
+        >
           <input
             type="text"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
+            {...register("search")}
             placeholder="iş ismi veya kelime"
             className="py-4 px-4 outline-none border border-r pl-10 w-full"
           />
+          {errors && (
+            <span className="absolute -bottom-5 text-red-600">
+              {errors?.search?.message}
+            </span>
+          )}
           <Search
             color="rgba(197,153,229,1)"
             className="absolute left-2 top-6"
@@ -62,6 +83,7 @@ const HeroPage = () => {
               color="rgba(197,153,229,1)"
               className="absolute left-2 top-6"
             />
+
             {location && (
               <div className="flex items-center gap-1 absolute -bottom-8">
                 <button type="button" onClick={() => setLocation("")}>

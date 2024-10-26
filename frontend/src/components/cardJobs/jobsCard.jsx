@@ -29,7 +29,7 @@ const JobsCard = ({ job }) => {
   };
 
   return (
-    <div className="w-full h-[400px] rounded-md border border-gray-400">
+    <div className="w-full h-full rounded-md border border-gray-400">
       <div className="p-2 w-full">
         <div className="flex items-center justify-between pb-4">
           <h1 className="font-bold">{job?.title}</h1>

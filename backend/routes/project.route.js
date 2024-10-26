@@ -22,11 +22,7 @@ router.delete(
   projectShareControllers.deleteShareProject
 );
 
-router.get(
-  "/projectById/:id",
-  isAuthenticatedUser,
-  projectShareControllers.shareIdProject
-);
+router.get("/projectById/:id", projectShareControllers.shareIdProject);
 
 router.get(
   "/myProjects",

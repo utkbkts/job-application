@@ -1,5 +1,6 @@
 import JobsCard from "@/components/cardJobs/jobsCard";
 import FilterDataGroup from "@/components/filterDataGroup/filterDataGroup";
+import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { useGetAllJobsQuery } from "@/redux/api/jobsApi";
 import { useSearchParams } from "react-router-dom";
@@ -36,10 +37,24 @@ const Jobs = () => {
 
           <FilterDataGroup data={getAllJobs} />
         </div>
-        <div className="w-full grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4 overflow-auto overflow-x-hidden h-screen">
-          {getAllJobs?.job?.map((job, index) => (
-            <JobsCard key={index} job={job} />
-          ))}
+        <div className="w-full grid lg:grid-cols-2 md:grid-cols-2 grid-cols-1 gap-4 overflow-auto overflow-x-hidden h-screen">
+          {getAllJobs?.job?.length > 0 ? (
+            <>
+              {getAllJobs?.job?.map((job, index) => (
+                <JobsCard key={index} job={job} />
+              ))}
+            </>
+          ) : (
+            <div className="min-h-screen flex items-center justify-center w-screen flex-col gap-2">
+              <h1>Hiç bir sonuç bulunamadı</h1>
+              <Button
+                onClick={() => setSearchParams("")}
+                className="bg-blue-700 hover:bg-blue-600"
+              >
+                Sıfırlamak için tıkla
+              </Button>
+            </div>
+          )}
         </div>
       </div>
     </div>

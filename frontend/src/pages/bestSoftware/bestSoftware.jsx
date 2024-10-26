@@ -74,9 +74,9 @@ const BestSoftware = () => {
                 </div>
               </div>
               <div>
-                {developer.user._id === user._id && (
+                {developer?.user?._id === user?._id && (
                   <div>
-                    <Button onClick={() => handleDelete(developer._id)}>
+                    <Button onClick={() => handleDelete(developer?._id)}>
                       <Trash />
                     </Button>
                   </div>
