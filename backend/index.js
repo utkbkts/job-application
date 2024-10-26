@@ -26,11 +26,18 @@ app.use(
     useDefaults: true,
     directives: {
       "default-src": ["'self'"],
-      "img-src": ["'self'", "https:", "data:", "https://res.cloudinary.com"],
+      "script-src": ["'self'", "https://upload-widget.cloudinary.com"],
+      "img-src": [
+        "'self'",
+        "https:",
+        "data:",
+        "https://upload-widget.cloudinary.com",
+      ],
       "frame-ancestors": ["'self'"],
     },
   })
 );
+
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ extended: true, limit: "50mb" }));
 app.use(
