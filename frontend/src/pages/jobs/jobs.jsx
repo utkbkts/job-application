@@ -1,5 +1,6 @@
 import JobsCard from "@/components/cardJobs/jobsCard";
 import FilterDataGroup from "@/components/filterDataGroup/filterDataGroup";
+import Loading from "@/components/loading/loading";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { useGetAllJobsQuery } from "@/redux/api/jobsApi";
@@ -26,8 +27,10 @@ const Jobs = () => {
   companyName !== null && (params.companyName = companyName);
   title !== null && (params.title = title);
   location !== null && (params.location = location);
-  const { data: getAllJobs } = useGetAllJobsQuery(params);
-
+  const { data: getAllJobs, isLoading } = useGetAllJobsQuery(params);
+  if (isLoading) {
+    return <Loading />;
+  }
   return (
     <div className="container mx-auto mt-12 pb-12">
       <div className="flex md:flex-row flex-col">

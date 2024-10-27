@@ -7,10 +7,11 @@ import Markdown from "@/components/markdown/markDown";
 import AllReviews from "./partials/AllReviews";
 import NewReviews from "./partials/NewReviews";
 import StarRatings from "react-star-ratings";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const BestSoftwareDetails = () => {
   const { id } = useParams();
-  const { data } = useProjectByIdQuery({ id });
+  const { data, isLoading } = useProjectByIdQuery({ id });
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const prevImageState = () => {
@@ -70,7 +71,20 @@ const BestSoftwareDetails = () => {
             <span>toplam ({data?.project?.numOfReviews}) kişi oyladı.</span>
             <span>({data?.project?.ratings})/5 </span>
           </div>
-          <Markdown>{data?.project?.description}</Markdown>
+          {isLoading ? (
+            <div className="w-full">
+              {/* Skeleton bileşenleri */}
+              <Skeleton className="h-8 w-full mb-4" />
+              <div className="flex items-center space-x-4 mb-8">
+                <Skeleton className="h-6 w-full" />
+                <Skeleton className="h-6 w-full" />
+              </div>
+              <Skeleton className="h-6 w-full mb-4" />
+              <Skeleton className="h-10 w-full" />
+            </div>
+          ) : (
+            <Markdown>{data?.project?.description}</Markdown>
+          )}
         </div>
         <div className="overflow-x-auto h-[600px]">
           <h1 className="font-bold text-2xl">Tüm Yorumlar</h1>

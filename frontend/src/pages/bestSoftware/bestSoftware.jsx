@@ -10,9 +10,10 @@ import { Link } from "react-router-dom";
 import { MdArrowRight, MdArrowLeft } from "react-icons/md";
 import { toast } from "sonner";
 import { useSelector } from "react-redux";
+import Loading from "@/components/loading/loading";
 
 const BestSoftware = () => {
-  const { data } = useProjectsAllQuery();
+  const { data, isLoading } = useProjectsAllQuery();
   const [currentIndex, setCurrentIndex] = useState(0);
   const { user } = useSelector((state) => state.auth);
   const [deleteProject, { error, isError, isSuccess }] =
@@ -47,7 +48,9 @@ const BestSoftware = () => {
   const handleDelete = async (id) => {
     await deleteProject({ id });
   };
-
+  if (isLoading) {
+    return <Loading />;
+  }
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12 p-4">
       {data?.project?.map((developer) => (

@@ -12,10 +12,11 @@ import AllReviews from "./allReviews";
 import { Separator } from "@/components/ui/separator";
 import NewReviews from "./newReviews";
 import StarRatings from "react-star-ratings";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const JobsDetails = () => {
   const { id } = useParams();
-  const { data } = useGetJobByIdQuery({ id });
+  const { data, isLoading } = useGetJobByIdQuery({ id });
   const [applyMutation, { isError, isSuccess, error }] = useApplyMutation();
   const { user } = useSelector((state) => state.auth);
   const application = data?.job?.applications?.find(
@@ -158,7 +159,20 @@ const JobsDetails = () => {
           <h3 className="font-semibold text-xl w-40 text-gray-800">
             Açıklama:
           </h3>
-          <Markdown>{data?.job?.description}</Markdown>
+          {isLoading ? (
+            <div className="w-full">
+              {/* Skeleton bileşenleri */}
+              <Skeleton className="h-8 w-full mb-4" />
+              <div className="flex items-center space-x-4 mb-8">
+                <Skeleton className="h-6 w-full" />
+                <Skeleton className="h-6 w-full" />
+              </div>
+              <Skeleton className="h-6 w-full mb-4" />
+              <Skeleton className="h-10 w-full" />
+            </div>
+          ) : (
+            <Markdown>{data?.job?.description}</Markdown>
+          )}
         </div>
         <Separator />
         <div className="overflow-x-auto h-[600px]">
