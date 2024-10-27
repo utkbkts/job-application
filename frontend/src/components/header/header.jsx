@@ -3,6 +3,7 @@ import HeaderLinks from "./header-links";
 import HeaderPopover from "./header-popover";
 import MobileHeader from "./mobile-header";
 import { AlignJustify } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -13,7 +14,7 @@ const Header = () => {
   return (
     <header className="w-full bg-gradient-to-r from-white via-gray-100 to-white shadow-lg py-6">
       <div className="flex container mx-auto items-center justify-between">
-        <div className="flex items-center">
+        <Link to={"/"} className="flex items-center cursor-pointer">
           <div className="relative">
             <img
               src="/logo/yup.png"
@@ -24,7 +25,7 @@ const Header = () => {
           <h1 className="text-2xl font-bold text-gray-800">
             Kariyer <span className="text-red-500">Hedefi</span>
           </h1>
-        </div>
+        </Link>
 
         <nav className="md:flex hidden items-center gap-2 ">
           <HeaderLinks />
@@ -32,7 +33,7 @@ const Header = () => {
         </nav>
         <button
           onClick={toggleSidebar}
-          className="p-2 bg-blue-500 text-white fixed top-8 right-4 z-50"
+          className="p-2 bg-blue-500 text-white fixed top-8 right-4 z-50 md:hidden flex"
         >
           <AlignJustify />
         </button>
