@@ -114,7 +114,7 @@ const JobsDetails = () => {
             {data?.job?.applications?.map((item) => (
               <img
                 src={item?.applicant?.avatar?.url}
-                key={item.id}
+                key={item?.id}
                 className="rounded-full h-8 w-8 -m-2"
               />
             ))}
