@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -71,14 +72,8 @@ const Register = () => {
   const navigate = useNavigate();
   const [registerCreate, { isLoading, isError, isSuccess, error }] =
     useRegisterMutation();
-  const { user } = useSelector((state) => state.auth);
   const { data } = useGetUserQuery();
 
-  useEffect(() => {
-    if (user && data) {
-      navigate("/");
-    }
-  }, [user, navigate, data]);
   const [imagePreview, setImagePreview] = useState([]);
   useEffect(() => {
     if (isSuccess) {

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -7,7 +8,6 @@ import { useLoginMutation } from "@/redux/api/authApi";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import { useSelector } from "react-redux";
 import { useGetUserQuery } from "@/redux/api/userApi";
 
 const inputFields = [
@@ -41,14 +41,8 @@ const Login = () => {
   const navigate = useNavigate();
   const [LoginCreate, { isLoading, isError, isSuccess, error }] =
     useLoginMutation();
-  const { user } = useSelector((state) => state.auth);
   const { data } = useGetUserQuery();
 
-  useEffect(() => {
-    if (user && data) {
-      navigate("/");
-    }
-  }, [user, navigate, data]);
   useEffect(() => {
     if (isSuccess) {
       toast.success("Giriş Başarılı", {

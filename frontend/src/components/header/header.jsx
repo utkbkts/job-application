@@ -7,7 +7,6 @@ import { Link } from "react-router-dom";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
-
   const toggleSidebar = () => {
     setIsOpen((prev) => !prev);
   };
