@@ -7,7 +7,6 @@ import { useLoginMutation } from "@/redux/api/authApi";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import { useGetUserQuery } from "../../../redux/api/userApi";
 import { useSelector } from "react-redux";
 
 const inputFields = [
@@ -41,9 +40,12 @@ const Login = () => {
   const navigate = useNavigate();
   const [LoginCreate, { isLoading, isError, isSuccess, error }] =
     useLoginMutation();
-    const { user } = useSelector((state) => state.auth);
-  const { data } = useGetUserQuery();
-  if (user) return data;
+  const { user } = useSelector((state) => state.auth);
+  useEffect(() => {
+    if (user) {
+      navigate("/");
+    }
+  }, [user, navigate]);
   useEffect(() => {
     if (isSuccess) {
       toast.success("Giriş Başarılı", {
