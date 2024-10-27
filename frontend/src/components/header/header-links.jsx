@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { Link, useLocation } from "react-router-dom";
 
-const menuLinks = [
+export const menuLinks = [
   {
     id: 1,
     href: "/",

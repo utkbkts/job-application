@@ -50,13 +50,13 @@ const HeroPage = () => {
   return (
     <div className="w-full flex flex-col h-screen">
       <div className="flex flex-col items-center gap-4">
-        <h1 className="font-bold text-4xl">
+        <h1 className="font-bold md:text-4xl">
           İlgi alanlarınıza ve becerilerinize uygun bir iş bulun
         </h1>
         <h2>Tüm lider sektörlerde binlerce iş fırsatı sizi bekliyor.</h2>
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="flex w-full relative"
+          className=" w-full relative md:flex hidden"
         >
           <input
             type="text"
@@ -111,7 +111,7 @@ const HeroPage = () => {
           ))}
         </div>
       </div>
-      <div className="flex items-center mt-20">
+      <div className="md:flex hidden items-center mt-20">
         <CarouselHome />
       </div>
       <div className="mt-28">

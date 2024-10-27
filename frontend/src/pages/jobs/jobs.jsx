@@ -31,7 +31,7 @@ const Jobs = () => {
   return (
     <div className="container mx-auto mt-12 pb-12">
       <div className="flex md:flex-row flex-col">
-        <div className="md:w-1/4 md:pb-0 pb-4 w-full sticky top-0 h-full">
+        <div className="md:w-1/4 md:pb-0 pb-4 w-full md:sticky top-0 h-full">
           <h1>Filtreleyin</h1>
           <Separator />
 

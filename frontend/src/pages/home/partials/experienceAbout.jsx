@@ -13,7 +13,7 @@ const ExperienceAbout = () => {
   const { data: getAllJobs } = useGetAllJobsQuery();
   const { data: bestUser } = useTopUserQuery();
   return (
-    <div className="grid grid-cols-3 gap-12 w-full ">
+    <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-12 w-full ">
       <div className="flex flex-col items-center">
         <h1>Kayıtlı olan kullanıcı sayısı</h1>
         <span className="font-bold text-2xl">

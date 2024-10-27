@@ -41,9 +41,9 @@ const JobsDetails = () => {
 
   return (
     <div className="max-w-7xl mx-auto my-10 p-8 bg-white shadow-xl rounded-2xl">
-      <div className="flex items-center justify-between mb-8">
-        <div>
-          <h1 className="font-extrabold text-4xl text-gray-900">
+      <div className="flex items-center sm:justify-between justify-center mb-8 flex-col sm:flex-row w-full">
+        <div className="flex flex-col items-center gap-2 justify-center ">
+          <h1 className="font-extrabold sm:text-4xl text-2xl text-gray-900">
             {data?.job?.title}
           </h1>
           <div className="pt-4 flex space-x-4">
@@ -61,53 +61,61 @@ const JobsDetails = () => {
             </Badge>
           </div>
         </div>
-        <Button
-          disabled={isApplies}
-          onClick={isApplies ? null : handleClick}
-          className={`${
-            isApplies
-              ? "opacity-50 cursor-not-allowed bg-gray-300"
-              : "bg-blue-600 hover:bg-blue-700"
-          } text-white py-3 px-8 rounded-full font-semibold shadow-lg transition-all duration-300 ease-in-out`}
-        >
-          {isApplies
-            ? isCancelled
-              ? "Başvurunuz iptal edildi."
-              : "Başvuruldu"
-            : "Şimdi Başvur"}
-        </Button>
+        <div className="mt-4 sm:mt-0">
+          <Button
+            disabled={isApplies}
+            onClick={isApplies ? null : handleClick}
+            className={`${
+              isApplies
+                ? "opacity-50 cursor-not-allowed bg-gray-300"
+                : "bg-blue-600 hover:bg-blue-700"
+            } text-white py-3 px-8 rounded-full font-semibold shadow-lg transition-all duration-300 ease-in-out`}
+          >
+            {isApplies
+              ? isCancelled
+                ? "Başvurunuz iptal edildi."
+                : "Başvuruldu"
+              : "Şimdi Başvur"}
+          </Button>
+        </div>
       </div>
 
       <h2 className="border-b-2 border-gray-300 font-semibold text-2xl mb-6 pb-4 text-gray-800">
         İş Detayları
       </h2>
       <div className="space-y-4">
-        <div className="flex items-center">
-          <h3 className="font-semibold text-xl w-40 text-gray-800">Şirket:</h3>
+        <div className="flex items-center sm:flex-row flex-col justify-center sm:justify-start">
+          <h3 className="font-semibold text-xl sm:w-40 text-gray-800">
+            Şirket:
+          </h3>
           <p className="text-lg text-gray-600">{data?.job?.companyName}🚀</p>
         </div>
-        <div className="flex items-center">
-          <h3 className="font-semibold text-xl w-40 text-gray-800">
+        <div className="flex items-center sm:flex-row flex-col justify-center sm:justify-start">
+          <h3 className="font-semibold text-xl sm:w-40 text-gray-800">
             Pozisyon:
           </h3>
           <p className="text-lg text-gray-600">{data?.job?.experience}</p>
         </div>
-        <div className="flex items-center">
-          <h3 className="font-semibold text-xl w-40 text-gray-800">Konum:</h3>
+        <div className="flex items-center sm:flex-row flex-col justify-center sm:justify-start">
+          <h3 className="font-semibold text-xl sm:w-40 text-gray-800">
+            Konum:
+          </h3>
           <p className="text-lg text-gray-600">{data?.job?.location}</p>
         </div>
-        <div className="flex items-center">
-          <h3 className="font-semibold text-xl w-40 text-gray-800">Deneyim:</h3>
+        <div className="flex items-center sm:flex-row flex-col justify-center sm:justify-start">
+          <h3 className="font-semibold text-xl sm:w-40 text-gray-800">
+            Deneyim:
+          </h3>
           <p className="text-lg text-gray-600">
             {data?.job?.experienceLevel}+ Yıl
           </p>
         </div>
-        <div className="flex items-center">
-          <h3 className="font-semibold text-xl w-40 text-gray-800">Maaş:</h3>
+        <div className="flex items-center sm:flex-row flex-col justify-center sm:justify-start">
+          <h3 className="font-semibold text-xl sm:w-40 text-gray-800">Maaş:</h3>
           <p className="text-lg text-gray-600">{data?.job?.salary}</p>
         </div>
-        <div className="flex items-center">
-          <h3 className="font-semibold text-xl w-40 text-gray-800">
+        <div className="flex items-center sm:flex-row flex-col justify-center sm:justify-start">
+          <h3 className="font-semibold text-xl sm:w-40 text-gray-800">
             Başvuru Sayısı:
           </h3>
           <div className="flex items-center pl-4">
@@ -123,14 +131,16 @@ const JobsDetails = () => {
             </span>
           </div>
         </div>
-        <div className="flex items-center">
-          <h3 className="font-semibold text-xl w-40 text-gray-800">Tarih:</h3>
+        <div className="flex items-center sm:flex-row flex-col justify-center sm:justify-start">
+          <h3 className="font-semibold text-xl sm:w-40 text-gray-800">
+            Tarih:
+          </h3>
           <p className="text-lg text-gray-600">
             {FormatDate(data?.job?.updatedAt)}
           </p>
         </div>
-        <div className=" flex items-center gap-2">
-          <h3 className="font-semibold text-xl w-40 text-gray-800">
+        <div className="flex items-center sm:flex-row flex-col justify-center sm:justify-start gap-2">
+          <h3 className="font-semibold text-xl sm:w-40 text-gray-800">
             Toplam Oy:
           </h3>
           <StarRatings

@@ -121,3 +121,9 @@
   white-space: normal !important;
   word-break: break-word !important;
 }
+
+@media (max-width: 878px) {
+  pre {
+    white-space: normal !important;
+  }
+}

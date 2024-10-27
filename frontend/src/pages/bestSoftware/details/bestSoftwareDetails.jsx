@@ -57,7 +57,7 @@ const BestSoftwareDetails = () => {
           <h1 className="font-bold text-2xl text-center ">
             {data?.project?.title}
           </h1>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 md:flex-row flex-col">
             <span>Kullanıcılar projeyi oyladı:</span>
             <StarRatings
               rating={data?.project?.ratings}
