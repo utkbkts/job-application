@@ -81,6 +81,7 @@ const Register = () => {
         description: "Tebrikler başarılı bir şekilde kayıt oldunuz.",
       });
       navigate("/login");
+      navigate(0);
     }
     if (isError) {
       const errorMessage =

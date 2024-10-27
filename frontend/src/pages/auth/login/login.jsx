@@ -49,6 +49,7 @@ const Login = () => {
         description: "Tebrikler başarılı bir şekilde giriş yaptınız.",
       });
       navigate("/");
+      navigate(0);
     }
     if (isError) {
       const errorMessage =
