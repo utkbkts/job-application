@@ -4,8 +4,8 @@
   "main": "backend/index.js",
   "type": "module",
   "scripts": {
-    "dev": "SET MODE=DEVELOPMENT& nodemon backend/server",
-    "prod": "SET MODE=PRODUCTION& nodemon backend/server",
+    "dev": "SET MODE=development& nodemon backend/server",
+    "prod": "SET MODE=production& nodemon backend/server",
     "start": "node backend/index.js",
     "build": "npm install && npm install --prefix frontend && npm run build --prefix frontend"
   },

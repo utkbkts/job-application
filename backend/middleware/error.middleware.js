@@ -2,7 +2,7 @@ export default (err, req, res, next) => {
   err.statusCode = err.statusCode || 500;
   const message = err.message || "Bir hata oluştu";
 
-  if (process.env.MODE === "DEVELOPMENT") {
+  if (process.env.MODE === "development") {
     console.log(err);
     return res.status(err.statusCode).json({
       success: false,
@@ -12,7 +12,7 @@ export default (err, req, res, next) => {
     });
   }
 
-  if (process.env.MODE === "PRODUCTION") {
+  if (process.env.MODE === "production") {
     let error = { ...err };
     error.message = message;
 
