@@ -45,7 +45,7 @@ const Jobs = () => {
               ))}
             </>
           ) : (
-            <div className="min-h-screen flex items-center justify-center w-screen flex-col gap-2">
+            <div className=" flex items-center  w-full flex-col gap-2">
               <h1>Hiç bir sonuç bulunamadı</h1>
               <Button
                 onClick={() => setSearchParams("")}

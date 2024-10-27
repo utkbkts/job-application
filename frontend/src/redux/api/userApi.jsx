@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { setisAuthenticated, setUser } from "../features/userSlice";
 
@@ -18,7 +19,7 @@ export const userApi = createApi({
           dispatch(setUser(data));
           dispatch(setisAuthenticated(true));
         } catch (error) {
-          console.log(error);
+          dispatch(setisAuthenticated(false));
         }
       },
       providesTags: ["User"],
