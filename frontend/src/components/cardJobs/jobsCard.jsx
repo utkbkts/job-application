@@ -12,7 +12,6 @@ const JobsCard = ({ job }) => {
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.auth);
   const [applyMutation, { isError, isSuccess, error }] = useApplyMutation();
-
   const isApplies = job?.applications?.some(
     (application) => application?.applicant?._id === user?._id || false
   );
@@ -22,6 +21,7 @@ const JobsCard = ({ job }) => {
     }
     if (isSuccess) {
       toast.success("Başvuru başarılı");
+      navigate(0);
     }
   }, [error, isSuccess, isError]);
   const handleClick = async (id) => {

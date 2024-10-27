@@ -6,7 +6,7 @@ export const jobsApi = createApi({
     baseUrl: `${import.meta.env.VITE_REACT_APP_API}/api/jobs`,
     credentials: "include",
   }),
-  tagTypes: ["User", "Apply"],
+  tagTypes: ["apply"],
   endpoints: (builder) => ({
     getAllJobs: builder.query({
       query: (params) => {
@@ -24,6 +24,7 @@ export const jobsApi = createApi({
           },
         };
       },
+      providesTags: ["apply"],
     }),
     createJobs: builder.mutation({
       query(body) {
@@ -33,14 +34,15 @@ export const jobsApi = createApi({
           body,
         };
       },
+      invalidatesTags: ["apply"],
     }),
     getJobById: builder.query({
       query: ({ id }) => `/jobId/${id}`,
-      providesTags: ["Apply", "User"],
+      providesTags: ["apply"],
     }),
     getMyAds: builder.query({
       query: () => `/myAds`,
-      providesTags: ["Apply", "User"],
+      providesTags: ["apply"],
     }),
   }),
 });

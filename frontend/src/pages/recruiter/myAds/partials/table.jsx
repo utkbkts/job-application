@@ -22,45 +22,30 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { FormatDate } from "@/helpers/formatDate";
-import confirmed from "/confirmed.png";
-import rejected from "/rejected.png";
 import { useGetMyAdsQuery } from "@/redux/api/jobsApi";
 
 import { Edit, MoreHorizontal } from "lucide-react";
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { useUpdatePostMutation } from "@/redux/api/applicationApi";
-import { motion } from "framer-motion";
-function statusChange(status) {
-  switch (status) {
-    case "reddedildi":
-      return <img src={rejected} />;
-    case "onaylandı":
-      return <img src={confirmed} className="h-20 w-20 rotate-45" />;
-    default:
-      return "bekliyor";
-  }
-}
+
 const TableDashboard = () => {
   const { data: myAds } = useGetMyAdsQuery();
-  const [status, setStatus] = useState("");
   const [updatePost, { isSuccess, isError, error }] = useUpdatePostMutation();
+  const navigate = useNavigate();
   useEffect(() => {
     if (isSuccess) {
       toast.success("başarıla güncellendi");
+      navigate(0);
     }
     if (isError) {
       toast.error(error?.data?.message);
     }
-  }, [isError, isSuccess, error]);
+  }, [isError, isSuccess, error, navigate]);
 
-  const handleClick = async (id) => {
-    await updatePost({ body: { status }, id });
-  };
-
-  const handleChange = (newStatus) => {
-    setStatus(newStatus);
+  const handleStatus = (newStatus, id) => {
+    updatePost({ body: { status: newStatus }, id });
   };
 
   return (
@@ -78,15 +63,6 @@ const TableDashboard = () => {
       {myAds?.job?.map((item) =>
         item?.applications?.map((app) => (
           <>
-            <motion.div
-              transition={{ duration: 1 }}
-              initial={{ scale: 0, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0, opacity: 0 }}
-              className="absolute right-1/2 top-1/3 -translate-y-1/2 -translate-x-1/2"
-            >
-              {statusChange(app?.status)}
-            </motion.div>
             <TableBody key={app._id}>
               <TableCell>
                 <Avatar>
@@ -114,11 +90,14 @@ const TableDashboard = () => {
               </TableCell>
               <TableCell>
                 <Select
-                  value={app?.status || "bekliyor"}
-                  onValueChange={(newStatus) => {
-                    handleChange(newStatus);
-                    handleClick(app?._id);
-                  }}
+                  disabled={
+                    app.status === "reddedildi" || app.status === "onaylandı"
+                  }
+                  defaultValue={app.status}
+                  value={app.status}
+                  onValueChange={(newStatus) =>
+                    handleStatus(newStatus, app?._id)
+                  }
                 >
                   <SelectTrigger className="w-[180px]">
                     <SelectValue placeholder="bekliyor" />

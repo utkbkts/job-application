@@ -4,7 +4,6 @@ import { useGetAllJobsQuery } from "@/redux/api/jobsApi";
 
 const LatestJobs = () => {
   const { data: getAllJobs } = useGetAllJobsQuery();
-
   return (
     <div className="mt-20">
       <h1 className="text-3xl font-bold">En son paylaşılan işler</h1>
