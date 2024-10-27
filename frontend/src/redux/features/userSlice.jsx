@@ -6,7 +6,7 @@ const initialState = {
   company: JSON.parse(localStorage.getItem("companyName")) || [],
 };
 export const userSlice = createSlice({
-  name: "authApi",
+  name: "userSlice",
   initialState,
   reducers: {
     setUser(state, action) {
