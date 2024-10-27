@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { useSelector } from "react-redux";
+import { useGetUserQuery } from "@/redux/api/userApi";
 
 const inputFields = [
   {
@@ -71,11 +72,13 @@ const Register = () => {
   const [registerCreate, { isLoading, isError, isSuccess, error }] =
     useRegisterMutation();
   const { user } = useSelector((state) => state.auth);
+  const { data } = useGetUserQuery();
+
   useEffect(() => {
-    if (user) {
+    if (user && data) {
       navigate("/");
     }
-  }, [user, navigate]);
+  }, [user, navigate, data]);
   const [imagePreview, setImagePreview] = useState([]);
   useEffect(() => {
     if (isSuccess) {

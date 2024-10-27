@@ -7,12 +7,7 @@ import { useSelector } from "react-redux";
 
 const MainLayout = () => {
   const { data } = useGetUserQuery();
-  const { user } = useSelector((state) => state.auth);
-  useEffect(() => {
-    if (user) {
-      data;
-    }
-  }, [data]);
+
   return (
     <div>
       <Header />
