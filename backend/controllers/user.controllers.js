@@ -149,9 +149,9 @@ const updateProfile = async (req, res) => {
   }
 };
 const GetUserMyProfile = catchAsyncError(async (req, res, next) => {
-  const user = await User.findById(req?.user?._id);
+  const user = await User.findById(req?.user?._id).select("-password");
 
-  return res.status(201).json({
+  return res.status(200).json({
     user,
   });
 });
