@@ -27,7 +27,7 @@ router.post(
   userControllers.updateProfile
 );
 //me profile
-router.get("/me", isAuthenticatedUser, userControllers.GetUserMyProfile);
+router.get("/me", userControllers.GetUserMyProfile);
 
 router.get("/getAllUsers", userControllers.getAllUsers);
 
