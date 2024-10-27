@@ -44,7 +44,7 @@ const AllReviews = ({ data }) => {
                 <p>{item?.comment}</p>
               </div>
             </div>
-            {user?._id === data?.job?.user?._id && (
+            {user?._id === item?.user?._id && (
               <div>
                 <Button
                   onClick={() => handleClick(item?._id)}
