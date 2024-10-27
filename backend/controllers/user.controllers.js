@@ -1,4 +1,4 @@
-import catchAsyncError from "../middleware/catch.middleware.js";
+import { catchAsyncError } from "catchasyncerror";
 import User from "../models/user.model.js";
 import { delete_file, upload_file } from "../utils/cloudinary.js";
 import getDataUri from "../utils/data.uri.js";

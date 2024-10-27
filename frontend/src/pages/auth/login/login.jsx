@@ -85,7 +85,9 @@ const Login = () => {
                 <div key={item.id}>
                   <Label>{item.label}</Label>
                   <RadioGroup
-                    onChange={changeEventHandler}
+                    onValueChange={(value) =>
+                      setFormState({ ...formState, userType: value })
+                    }
                     name={item.name}
                     className="flex items-center space-x-2 pt-4"
                   >
