@@ -7,7 +7,7 @@ export const authApi = createApi({
     baseUrl: `${import.meta.env.VITE_REACT_APP_API}/api/auth`,
     credentials: "include",
   }),
-  tagTypes: ["User"],
+  tagTypes: ["auth"],
   endpoints: (builder) => ({
     register: builder.mutation({
       query(body) {
@@ -17,7 +17,7 @@ export const authApi = createApi({
           body,
         };
       },
-      invalidatesTags: ["User"],
+      invalidatesTags: ["auth"],
     }),
     login: builder.mutation({
       query(body) {
@@ -27,7 +27,7 @@ export const authApi = createApi({
           body,
         };
       },
-      invalidatesTags: ["User"],
+      invalidatesTags: ["auth"],
       async onQueryStarted(args, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
@@ -42,7 +42,7 @@ export const authApi = createApi({
         url: "/logout",
         method: "POST",
       }),
-      invalidatesTags: ["User"],
+      invalidatesTags: ["auth"],
     }),
   }),
 });
