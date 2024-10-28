@@ -33,8 +33,8 @@ iş verenler ile iş arayanları buluşturan platform.
 
 ## 🔗 Bağlantılar
 
-- **Canlı Demo**:
-
+- **Canlı Demo**: https://job-application-qq0m.onrender.com
+- **Youtube Video**: https://www.youtube.com/watch?v=3ot49rlA6Uw
 ---
 
 ---
